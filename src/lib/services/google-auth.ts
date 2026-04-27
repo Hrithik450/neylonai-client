@@ -26,7 +26,7 @@ export async function logoutFromGoogle() {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken") || "",
+      "X-CSRFToken": getCookie("__Secure-csrftoken") || "",
     },
   });
 }
