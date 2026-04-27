@@ -38,7 +38,7 @@ export const account = pgTable(
       foreignColumns: [user.id],
       name: "account_userId_user_id_fk",
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export const session = pgTable(
@@ -54,7 +54,7 @@ export const session = pgTable(
       foreignColumns: [user.id],
       name: "session_userId_user_id_fk",
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export const threadMessages = pgTable(
@@ -75,7 +75,7 @@ export const threadMessages = pgTable(
       foreignColumns: [thread.id],
       name: "thread_messages_thread_id_thread_id_fk",
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export const thread = pgTable(
@@ -94,7 +94,7 @@ export const thread = pgTable(
       foreignColumns: [user.id],
       name: "thread_user_id_user_id_fk",
     }).onDelete("cascade"),
-  ]
+  ],
 );
 
 export const roleEnum = pgEnum("role", [
@@ -129,7 +129,7 @@ export const user = pgTable(
       .default("internal_assistant")
       .notNull(),
   },
-  (table) => [unique("user_email_unique").on(table.email)]
+  (table) => [unique("user_email_unique").on(table.email)],
 );
 
 export const feedback = pgTable(
@@ -149,5 +149,5 @@ export const feedback = pgTable(
       foreignColumns: [user.id],
       name: "feedback_user_id_user_id_fk",
     }).onDelete("cascade"),
-  ]
+  ],
 );

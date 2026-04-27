@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navigation/navbar";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -27,18 +27,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body cz-shortcut-listen="false">
-        <NuqsAdapter>
-          <GoogleOAuthProvider clientId="976812420059-j2qgun2qptvjo4nbard7ll800hj79604.apps.googleusercontent.com">
-            <GoogleButtonsRefProvider>
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
+        >
+          <GoogleButtonsRefProvider>
+            <NuqsAdapter>
               <LayoutWrapper>
-                <GoogleOneTap />
-                <Navbar />
-                {children}
-                <AIChat />
+                <Suspense fallback={null}>
+                  <GoogleOneTap />
+                  <Navbar />
+                  {children}
+                  <AIChat />
+                </Suspense>
               </LayoutWrapper>
-            </GoogleButtonsRefProvider>
-          </GoogleOAuthProvider>
-        </NuqsAdapter>
+            </NuqsAdapter>
+          </GoogleButtonsRefProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );
