@@ -3,7 +3,7 @@ export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 function getCookie(name: string) {
   const cookies = document.cookie.split("; ");
 
-  for (let cookie of cookies) {
+  for (const cookie of cookies) {
     const [key, value] = cookie.split("=");
     if (key === name) return value;
   }
