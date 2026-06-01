@@ -1,28 +1,20 @@
 "use client";
 
-import { WidgetHeader } from "@/components/support-widget/widget-header";
-import { ClassicLoader } from "@/components/classic-loader";
-import { FiArrowRight } from "react-icons/fi";
-import Image from "next/image";
 import React from "react";
-import {
-  AssistantDisplayMap,
-  RoleDisplayMap,
-  type Screen,
-  TabType,
-  useUserStore,
-} from "@/store/store";
+import Image from "next/image";
 import { Edit } from "lucide-react";
-import { signOutAccount } from "@/actions/auth/sign-out";
-import { WidgetUpdateSettings } from "./widget-screens/widget-update-settings";
-import { useSessionStore } from "@/store/session-store";
+import { FiArrowRight } from "react-icons/fi";
 
-export function WidgetSettings({
-  pushScreen,
-}: {
-  pushScreen: (tab: TabType, screen: Screen) => void;
-}) {
-  const { tokens, assistant, role } = useUserStore();
+import { ClassicLoader } from "@/components/classic-loader";
+import { WidgetHeader } from "@/components/widget/widget-header";
+
+import { signOutAccount } from "@/actions/auth/sign-out";
+
+import { useSessionStore } from "@/store/session-store";
+import { useWidgetNavigation } from "@/hooks/use-widget-navigation";
+
+export function WidgetSettings() {
+  const { navigate } = useWidgetNavigation();
   const { user, isAuthenticated } = useSessionStore();
 
   if (!user?.profile_image)
@@ -64,12 +56,12 @@ export function WidgetSettings({
             aria-label="Edit Profile"
           >
             <Edit
-              onClick={() =>
-                pushScreen(TabType.Settings, {
-                  component: WidgetUpdateSettings,
-                  props: { role: role, assistant: assistant },
-                })
-              }
+              // onClick={() =>
+              //   pushScreen(TabType.Settings, {
+              //     component: WidgetUpdateSettings,
+              //     props: { role: role, assistant: assistant },
+              //   })
+              // }
               className="w-5 h-5 text-gray-600 hover:text-gray-800 transition"
             />
           </button>
@@ -79,37 +71,24 @@ export function WidgetSettings({
         <div className="w-full space-y-3 mb-4">
           <div
             className="group hover:cursor-pointer bg-gray-100 rounded-2xl p-4 flex justify-between items-center shadow-sm hover:shadow-md transition"
-            onClick={() =>
-              pushScreen(TabType.Settings, {
-                component: WidgetUpdateSettings,
-                props: { role: role, assistant: assistant },
-              })
-            }
+            // onClick={() =>
+            //   pushScreen(TabType.Settings, {
+            //     component: WidgetUpdateSettings,
+            //     props: { role: role, assistant: assistant },
+            //   })
+            // }
           >
             <div>
               <p className="text-md font-medium text-gray-800">
                 Selected AI Assistant
               </p>
-              <p className="text-sm text-gray-500">
+              {/* <p className="text-sm text-gray-500">
                 {assistant
                   ? AssistantDisplayMap[assistant]
                   : "Internal Assistant"}
-              </p>
+              </p> */}
             </div>
             <FiArrowRight className="text-gray-400 group-hover:-rotate-45 transition-transform duration-150 ease-linear w-5 h-5" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-gray-100 rounded-2xl p-4 text-center shadow-sm hover:shadow-md transition">
-              <p className="font-medium text-gray-800 text-sm">Tokens Left</p>
-              <p className="text-xl font-semibold text-blue-600">{tokens}</p>
-            </div>
-            <div className="bg-gray-100 rounded-2xl p-4 text-center shadow-sm hover:shadow-md transition">
-              <p className="font-medium text-gray-800 text-sm">Role</p>
-              <p className="text-sm md:text-lg text-gray-500 break-all">
-                {role ? RoleDisplayMap[role] : "explorer"}
-              </p>
-            </div>
           </div>
         </div>
 

@@ -1,9 +1,9 @@
 "use client";
 
-import { useSupportWidgetToggleStore } from "@/store/store";
 import { ArrowLeftIcon, X, Minimize2, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { useWidgetToggleStore } from "@/store/widget-store";
 
 interface WidgetHeaderProps {
   header: string;
@@ -16,15 +16,14 @@ export const WidgetHeader: React.FC<WidgetHeaderProps> = ({
   header,
   className,
 }): React.JSX.Element => {
-  const { isOpen, setIsOpen, isCollapse, setCollapse } =
-    useSupportWidgetToggleStore();
+  const { isOpen, setIsOpen, isCollapse, setCollapse } = useWidgetToggleStore();
 
   return (
     <nav
       className={cn(
         "pb-2 flex items-center border-b-2 border-black/10",
         "bg-[rgb(144,238,144)]",
-        className
+        className,
       )}
     >
       <div className="w-full grid grid-cols-6 md:grid-cols-4 items-center px-4">

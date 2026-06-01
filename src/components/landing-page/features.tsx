@@ -20,28 +20,28 @@ import { AvatarGroup } from "../avatar-group";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import {
-  TabType,
-  useNavigationStore,
-  useSupportWidgetToggleStore,
-} from "@/store/store";
+  useWidgetNavigationStore,
+  useWidgetToggleStore,
+} from "@/store/widget-store";
+import { WidgetTabs } from "@/lib/constants";
 
 export function FeatureSection() {
-  const { switchTab } = useNavigationStore();
-  const { setIsOpen } = useSupportWidgetToggleStore();
+  const { switchTab } = useWidgetNavigationStore();
+  const { setIsOpen } = useWidgetToggleStore();
 
   return (
     <section
       id="features"
       className={cn(
         sfProRegular.className,
-        "my-4 md:my-16 px-3 md:px-5 xl:px-10 2xl:px-15 relative"
+        "my-4 md:my-16 px-3 md:px-5 xl:px-10 2xl:px-15 relative",
       )}
     >
       <header className="relative flex flex-col gap-4 md:gap-0 md:flex-row justify-between items-start md:items-end">
         <h2
           className={cn(
             guminertMedium.className,
-            "max-w-xl text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-tight md:leading-15 xl:leading-17 2xl:leading-19"
+            "max-w-xl text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl leading-tight md:leading-15 xl:leading-17 2xl:leading-19",
           )}
         >
           Our Features
@@ -50,11 +50,11 @@ export function FeatureSection() {
         <button
           onClick={() => {
             setIsOpen(true);
-            switchTab(TabType.Contact);
+            switchTab(WidgetTabs.Contact);
           }}
           className={cn(
             "group flex items-center gap-3 bg-[#0d3129] p-3 px-6 rounded-full text-white cursor-pointer text-sm md:text-lg",
-            guminertRegular.className
+            guminertRegular.className,
           )}
         >
           Book Appointment

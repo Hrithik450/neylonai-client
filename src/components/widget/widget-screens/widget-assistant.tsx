@@ -2,55 +2,43 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { InputForm } from "@/components/support-widget/input-form";
-import { ConversationUI } from "@/components/support-widget/conversation-ui";
-import {
-  TabType,
-  type Screen,
-  useAssistantStore,
-  useInputStore,
-  useThreadMessageStore,
-  useThreadStore,
-  useUserStore,
-} from "@/store/store";
+import { InputForm } from "@/components/widget/input-form";
+import { ConversationUI } from "@/components/widget/conversation-ui";
 import { Thread } from "@/actions/threads/threads.types";
-import { WidgetHeader } from "@/components/support-widget/widget-header";
+import { WidgetHeader } from "@/components/widget/widget-header";
 import { MessagesResponse } from "@/actions/thread_messages/thread_messages.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ClassicLoader } from "@/components/classic-loader";
-import { messageSets } from "@/lib/constants";
 import { useSessionStore } from "@/store/session-store";
+import {
+  useInputStore,
+  useThreadMessageStore,
+  useThreadStore,
+} from "@/store/store";
+import { useWidgetStore } from "@/store/widget-store";
+import { useErrorStore } from "@/store/error-store";
+import { useWidgetNavigation } from "@/hooks/use-widget-navigation";
+import { thinkingPhases } from "@/lib/constants";
 
 interface WidgetChatUIProps {
   id: string;
   title: string;
-  popScreen: () => void;
-  pushScreen: (tab: TabType, screen: Screen) => void;
-  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
-  setStatus: React.Dispatch<
-    React.SetStateAction<"error" | "saving" | "saved" | null>
-  >;
 }
 
-export function WidgetChatThreadUI({
-  id,
-  title,
-  popScreen,
-  setMessage,
-  setStatus,
-}: WidgetChatUIProps) {
+export function WidgetAssistant({ id, title }: WidgetChatUIProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [limitReached, setLimitReached] = React.useState<string | null>(null);
 
-  const { currentUserId, tokens, resumeTokens, setTokens, assistant } =
-    useUserStore();
-  const { currentThreadId, setCurrentThreadId, setThreads } = useThreadStore();
   const { messages, updateMessage, setMessages } = useThreadMessageStore();
-  const { input, setInput, setDisableInput, setFile } = useInputStore();
-  const { setAssistantTyping, setThinkingPhase } = useAssistantStore();
-  const { file } = useInputStore();
+  const { currentThreadId, setCurrentThreadId, setThreads } = useThreadStore();
 
-  const { user, isAuthenticated } = useSessionStore();
+  const { input, setInput, setDisableInput, file, setFile } = useInputStore();
+  const { setAssistantTyping, setThinkingPhase } = useWidgetStore();
+
+  const { setMessage, setStatus } = useErrorStore();
+  const { user } = useSessionStore();
+
+  const { back } = useWidgetNavigation();
 
   React.useEffect(() => {
     const fetchThreadMessages = async () => {
@@ -84,35 +72,11 @@ export function WidgetChatThreadUI({
     if (!id || !currentThreadId) setMessages([]);
   }, [id]);
 
-  React.useEffect(() => {
-    if (["resume_assistant"].includes(assistant) && resumeTokens <= 0)
-      setLimitReached("You’ve hit today’s resume limit. Resets at 00:00.");
-
-    if (tokens <= 0)
-      setLimitReached(
-        "You've reached your daily usage limit. Access will reset at 00:00",
-      );
-  }, [tokens, resumeTokens]);
-
   const handleSendMessage = async () => {
-    if (!currentUserId) {
+    if (!user || !user.id) {
       setStatus("error");
       setMessage(
         "Please sign in to continue the conversation with our assistant.",
-      );
-      return;
-    }
-
-    if (["resume_assistant"].includes(assistant) && resumeTokens <= 0) {
-      setStatus("error");
-      setMessage("You’ve hit today’s resume limit. Resets at 00:00.");
-      return;
-    }
-
-    if (tokens <= 0) {
-      setStatus("error");
-      setMessage(
-        "You've reached your daily usage limit. Access will reset at 00:00",
       );
       return;
     }
@@ -128,54 +92,30 @@ export function WidgetChatThreadUI({
     setAssistantTyping(true);
 
     try {
-      let response: Response | null = null;
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/internal-assistant/api/v1/text-generation/`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            senderId: user.id,
+            userMessage: input,
+            threadId: currentThreadId,
+          }),
+        },
+      );
 
-      switch (assistant) {
-        case "customer_service_assistant":
-        case "internal_assistant":
-          response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/internal-assistant/api/v1/text-generation/`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                userMessage: input,
-                threadId: currentThreadId,
-                senderId: currentUserId,
-              }),
-            },
-          );
-          break;
-
-        case "resume_assistant":
-          const formData = new FormData();
-          formData.append("userMessage", input);
-          formData.append("senderId", currentUserId);
-          if (currentThreadId) formData.append("threadId", currentThreadId);
-          if (file) formData.append("file", file);
-
-          response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/resume-assistant/api/v1/generate-resume/`,
-            {
-              method: "POST",
-              body: formData,
-            },
-          );
-          break;
-      }
-
-      if (!response.ok) {
+      if (!response.ok || !response.body) {
         const errorData = await response.json().catch(() => ({}));
         setAssistantTyping(false);
+
         setStatus("error");
         setMessage(
           errorData?.error || "An unexpected error occurred. Please try again.",
         );
-        console.error(errorData?.error);
         return;
       }
 
-      if (!response.body) throw new Error("No response stream");
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let accumulatedText = "";
@@ -200,19 +140,10 @@ export function WidgetChatThreadUI({
               if (thread.id) setCurrentThreadId(thread.id);
               break;
 
-            case "tokensUpdated":
-              const user = JSON.parse(dataValue);
-              const tokens = ["resume_assistant"].includes(assistant)
-                ? user.resume_generation_limit
-                : user.daily_limit;
-
-              setTokens(tokens);
-              break;
-
             case "thinkingPhase":
               const thinking: {
                 thinking: string;
-                thinkingPhase: keyof typeof messageSets;
+                thinkingPhase: keyof typeof thinkingPhases;
               } = JSON.parse(dataValue);
               setAssistantTyping(thinking.thinking === "true");
               setThinkingPhase(thinking.thinkingPhase);
@@ -283,17 +214,17 @@ export function WidgetChatThreadUI({
               break;
 
             case "humanError":
-              console.error(dataValue);
               setDisableInput(false);
               setAssistantTyping(false);
+
               setStatus("error");
               setMessage(dataValue);
               break;
 
             case "error":
-              console.error(dataValue);
               setDisableInput(false);
               setAssistantTyping(false);
+
               setStatus("error");
               setMessage(dataValue);
               break;
@@ -301,26 +232,17 @@ export function WidgetChatThreadUI({
         }
       }
     } catch (error) {
-      console.error("Streaming fetch error", error);
       setDisableInput(false);
       setAssistantTyping(false);
     }
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className={cn("flex flex-col justify-center items-center h-full")}>
-        <ClassicLoader />
-      </div>
-    );
-  }
 
   return (
     <div className={cn("flex flex-col justify-center h-full")}>
       <WidgetHeader
         className="sticky top-0"
         header={title || "New Chat"}
-        action={() => popScreen()}
+        action={() => back()}
       />
 
       {/* Skeleton  */}
@@ -369,7 +291,7 @@ export function WidgetChatThreadUI({
       )}
 
       <div className="relative">
-        <div
+        {/* <div
           className={cn(
             "flex justify-center items-start absolute bottom-26 md:bottom-23 left-0 right-0 w-[87%] mx-auto rounded-t-xl border border-red-300 bg-linear-to-r from-red-50 to-red-100 px-3 py-2 pb-3 text-sm text-center shadow-md backdrop-blur-md transition-all duration-500 ease-out",
             limitReached
@@ -378,7 +300,8 @@ export function WidgetChatThreadUI({
           )}
         >
           <p className="text-sm font-medium text-gray-700">{limitReached}</p>
-        </div>
+        </div> */}
+
         <InputForm handleSendMessage={handleSendMessage} />
       </div>
     </div>

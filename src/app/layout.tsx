@@ -4,7 +4,7 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navigation/navbar";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { AIChat } from "@/components/support-widget/widget-toggle";
+import { AIChat } from "@/components/widget/widget-toggle";
 import { GoogleOAuthProvider } from "@/providers/google-oauth-provider";
 import { GoogleOneTap } from "@/components/auth/google-one-tap";
 import { LayoutWrapper } from "./layout-wrapper";

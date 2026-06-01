@@ -3,15 +3,16 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { ChevronRight, Sparkles } from "lucide-react";
-import { SupportWidget } from "@/components/support-widget/widget";
-import { useSupportWidgetToggleStore } from "@/store/store";
+
 import { useSearchParams } from "next/navigation";
+import { useWidgetToggleStore } from "@/store/widget-store";
+import { Widget } from "./widget";
 
 export function AIChat() {
   const searchParams = useSearchParams();
   const loggedIn = searchParams.get("auth");
 
-  const { isOpen, setIsOpen } = useSupportWidgetToggleStore();
+  const { isOpen, setIsOpen } = useWidgetToggleStore();
 
   React.useEffect(() => {
     setIsOpen(true);
@@ -23,7 +24,7 @@ export function AIChat() {
 
   return (
     <div className="fixed bottom-3 right-3 sm:right-6 2xl:right-[max(1rem,calc((100vw-120rem)/2+2rem))] z-99 flex flex-col items-end">
-      <SupportWidget />
+      <Widget />
 
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -32,7 +33,7 @@ export function AIChat() {
         <div
           className={cn(
             isOpen ? "rotate-90" : "rotate-0",
-            "transform transition-transform duration-200 "
+            "transform transition-transform duration-200 ",
           )}
         >
           {isOpen ? (

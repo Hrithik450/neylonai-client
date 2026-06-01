@@ -1,19 +1,17 @@
 "use client";
 
-import { ChatInputTextarea } from "@/components/support-widget/input-text-area";
-import { PromptInput, PromptInputActions } from "@/components/ui/prompt-input";
-import { SuggestionBar } from "@/components/support-widget/suggestion-bar";
-import { SendButton } from "@/components/support-widget/send-button";
-import {
-  useAssistantStore,
-  useErrorStore,
-  useInputStore,
-  useThreadMessageStore,
-  useUserStore,
-} from "@/store/store";
-import { FileText, Paperclip, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import React from "react";
+import { FileText, X } from "lucide-react";
+
+import { ChatInputTextarea } from "@/components/widget/input-text-area";
+import { PromptInput, PromptInputActions } from "@/components/ui/prompt-input";
+import { SuggestionBar } from "@/components/widget/suggestion-bar";
+import { SendButton } from "@/components/widget/send-button";
+import { Button } from "@/components/ui/button";
+
+import { useErrorStore } from "@/store/error-store";
+import { useWidgetStore } from "@/store/widget-store";
+import { useInputStore, useThreadMessageStore } from "@/store/store";
 
 export function InputForm({
   handleSendMessage,
@@ -24,8 +22,7 @@ export function InputForm({
   const [filePreviewName, setFilePreviewName] = React.useState<string>("");
   const [filePreviewUrl, setFilePreviewUrl] = React.useState<string>("");
 
-  const { assistant } = useUserStore();
-  const { assistantTyping } = useAssistantStore();
+  const { assistantTyping } = useWidgetStore();
   const { updateMessage } = useThreadMessageStore();
   const { setStatus, setMessage } = useErrorStore();
   const { input, setInput, disableInput, setFile } = useInputStore();
@@ -76,7 +73,7 @@ export function InputForm({
           <div className="flex items-center justify-start mr-auto max-w-max mt-2 px-2 py-1 bg-muted/40 border border-black/20 rounded-md shadow-xs">
             <div className="flex items-center gap-2">
               <FileText className="w-5 h-5 text-red-500" />
-              <span className="text-sm font-medium truncate max-w-[200px]">
+              <span className="text-sm font-medium truncate max-w-50">
                 {filePreviewName}
               </span>
             </div>
@@ -116,12 +113,12 @@ export function InputForm({
 
           <PromptInputActions className="self-end gap-3">
             {/* <MicButton
-            isRecording={isRecording}
-            classicLoading={classicLoading}
-            toggleRecording={toggleRecording}
-          /> */}
+              isRecording={isRecording}
+              classicLoading={classicLoading}
+              toggleRecording={toggleRecording}
+            /> */}
 
-            {["resume_assistant"].includes(assistant) && (
+            {/* {["resume_assistant"].includes(assistant) && (
               <label title="Upload PDF" htmlFor="file-upload">
                 <input
                   type="file"
@@ -142,7 +139,7 @@ export function InputForm({
                   <Paperclip className="w-5 h-5" />
                 </Button>
               </label>
-            )}
+            )} */}
 
             <SendButton
               isDisabled={!input.trim() || disableInput}

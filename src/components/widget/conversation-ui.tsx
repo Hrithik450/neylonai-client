@@ -5,17 +5,17 @@ import { cn } from "@/lib/utils";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import ReactMarkdown from "react-markdown";
-import { useAssistantStore } from "@/store/store";
-import { ChevronsDown, Copy, Download, FileText } from "lucide-react";
+import { useWidgetStore } from "@/store/widget-store";
+import { ChevronsDown, Copy, FileText } from "lucide-react";
 import { NewMessage } from "@/actions/thread_messages/thread_messages.types";
-import { DynamicAssistantTyping } from "@/components/support-widget/assistant-typing";
+import { DynamicAssistantTyping } from "@/components/widget/assistant-typing";
 
 export function ConversationUI({
   conversations,
 }: {
   conversations?: NewMessage[];
 }) {
-  const { assistantTyping } = useAssistantStore();
+  const { assistantTyping } = useWidgetStore();
 
   // Auto Scroll to bottom on new message
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -61,7 +61,7 @@ export function ConversationUI({
               "text-sm md:text-base rounded-xl",
               conversation.role === "user"
                 ? "ml-auto max-w-[75%]"
-                : "p-3 md:p-4 max-w-full"
+                : "p-3 md:p-4 max-w-full",
             )}
           >
             {conversation.role === "assistant" ? (
@@ -201,7 +201,7 @@ export function ConversationUI({
               <div
                 className={cn(
                   "flex justify-start space-x-2",
-                  conversation.file_url ? "mt-2" : "mt-0"
+                  conversation.file_url ? "mt-2" : "mt-0",
                 )}
               >
                 <button

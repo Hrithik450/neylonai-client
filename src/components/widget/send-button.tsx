@@ -1,10 +1,12 @@
 "use client";
 
 import { MouseEvent } from "react";
-import { Button } from "@/components/ui/button";
 import { ArrowUp, Square } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import { PromptInputAction } from "@/components/ui/prompt-input";
-import { useAssistantStore } from "@/store//store";
+
+import { useWidgetStore } from "@/store/widget-store";
 
 interface SendButtonProps {
   isDisabled: boolean;
@@ -12,7 +14,7 @@ interface SendButtonProps {
 }
 
 export function SendButton({ isDisabled, handleSubmit }: SendButtonProps) {
-  const { assistantTyping } = useAssistantStore();
+  const { assistantTyping } = useWidgetStore();
 
   return (
     <PromptInputAction

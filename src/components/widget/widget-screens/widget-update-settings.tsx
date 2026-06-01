@@ -4,7 +4,7 @@ import React from "react";
 import { Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { WidgetHeader } from "@/components/support-widget/widget-header";
+import { WidgetHeader } from "@/components/widget/widget-header";
 import {
   Select,
   SelectContent,
@@ -84,7 +84,7 @@ export function WidgetUpdateSettings({
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
-        }
+        },
       );
       const updatedData = await response.json();
 

@@ -27,7 +27,7 @@ export function WigetContact() {
         onClick={() =>
           window.open(
             "https://mail.google.com/mail/u/0/?fs=1&to=mhrithik450@gmail.com&tf=cm",
-            "_blank"
+            "_blank",
           )
         }
         className="grid grid-cols-1 gap-3"
@@ -45,7 +45,7 @@ export function WigetContact() {
           onClick={() =>
             window.open(
               "https://mail.google.com/mail/u/0/?fs=1&to=mhrithik450@gmail.com&tf=cm",
-              "_blank"
+              "_blank",
             )
           }
           className="cursor-pointer p-3 px-5 border rounded-xl bg-white shadow-sm flex items-center gap-3 hover:shadow-md transition-all"

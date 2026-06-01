@@ -5,20 +5,20 @@ import { Link as ScrollLink } from "react-scroll";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import {
-  TabType,
-  useNavigationStore,
-  useSupportWidgetToggleStore,
-} from "@/store/store";
+  useWidgetNavigationStore,
+  useWidgetToggleStore,
+} from "@/store/widget-store";
+import { WidgetTabs } from "@/lib/constants";
 
 export function Footer() {
-  const { setIsOpen } = useSupportWidgetToggleStore();
-  const { switchTab } = useNavigationStore();
+  const { setIsOpen } = useWidgetToggleStore();
+  const { switchTab } = useWidgetNavigationStore();
 
   return (
     <footer
       className={cn(
         guminertRegular.className,
-        "pt-10 md:pt-16 mt-10 px-6 md:px-10 xl:px-16 2xl:px-20 relative overflow-hidden bg-[#000B0E] text-white"
+        "pt-10 md:pt-16 mt-10 px-6 md:px-10 xl:px-16 2xl:px-20 relative overflow-hidden bg-[#000B0E] text-white",
       )}
     >
       <div className="max-w-480 mx-auto">
@@ -27,7 +27,7 @@ export function Footer() {
             <h2
               className={cn(
                 "text-2xl md:text-4xl mb-4",
-                guminertBold.className
+                guminertBold.className,
               )}
             >
               Neylon AI
@@ -56,7 +56,7 @@ export function Footer() {
                 className="cursor-pointer"
                 onClick={() => {
                   setIsOpen(true);
-                  switchTab(TabType.Home);
+                  switchTab(WidgetTabs.Home);
                 }}
               >
                 Blog & Insights
@@ -83,7 +83,7 @@ export function Footer() {
               onClick={() =>
                 window.open(
                   "https://mail.google.com/mail/u/0/?fs=1&to=mhrithik450@gmail.com&tf=cm",
-                  "_blank"
+                  "_blank",
                 )
               }
               className="cursor-pointer text-gray-300 text-sm md:text-base mb-2"

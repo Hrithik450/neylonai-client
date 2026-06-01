@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useSessionStore } from "@/store/session-store";
-import { useGoogleAuth } from "@/hooks/use-google-auth";
+import { useGoogleAuthHandler } from "@/hooks/use-google-auth-handler";
 import { useGoogleOAuth } from "@/providers/google-oauth-provider";
 
 export function GoogleOneTap() {
-  const { handleCredential } = useGoogleAuth();
+  const { handleCredential } = useGoogleAuthHandler();
   const { clientId, scriptLoaded } = useGoogleOAuth();
 
   const { isAuthenticated, sessionChecked } = useSessionStore();

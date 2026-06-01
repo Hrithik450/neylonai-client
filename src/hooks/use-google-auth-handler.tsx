@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { useErrorStore } from "@/store/store";
+import { useErrorStore } from "@/store/error-store";
 import { useSessionStore } from "@/store/session-store";
 import {
   loginWithGoogleToken,
@@ -10,7 +10,7 @@ import {
 import type { SessionResponse } from "@/lib/types/request-response";
 import { useGoogleRefButtons } from "@/providers/google-buttons-ref-provider";
 
-export function useGoogleAuth() {
+export function useGoogleAuthHandler() {
   const { desktopButtonRef, mobileButtonRef } = useGoogleRefButtons();
 
   const { setUser, setLoading } = useSessionStore();

@@ -12,9 +12,9 @@ import {
   useUserStore,
   RoleAssistantMap,
   useNavigationStore,
-  useErrorStore,
   useSupportWidgetToggleStore,
 } from "@/store/store";
+import { useErrorStore } from "@/store/error-store";
 
 interface ArticlePost {
   title: string;
@@ -154,7 +154,7 @@ export default function CustomerServiceAssistantBlog() {
     if (!allowedAssistants.includes(pageAssistant as AssistantKey)) {
       setStatus("error");
       setMessage(
-        "Please change your role to Business Owner to access this article."
+        "Please change your role to Business Owner to access this article.",
       );
       switchTab(TabType.Settings);
       return router.push("/");
@@ -164,7 +164,7 @@ export default function CustomerServiceAssistantBlog() {
     if (assistant !== pageAssistant) {
       setStatus("error");
       setMessage(
-        "Please select the Customer Service Assistant to access this article."
+        "Please select the Customer Service Assistant to access this article.",
       );
       switchTab(TabType.Settings);
       return router.push("/");
@@ -175,7 +175,7 @@ export default function CustomerServiceAssistantBlog() {
     <section
       className={cn(
         "relative max-w-480 mx-auto pt-24 md:pt-30 pb-4 md:pb-10 md:px-14 flex justify-start items-start bg-gray-50 text-gray-800",
-        guminertRegular.className
+        guminertRegular.className,
       )}
     >
       <div className="max-w-5xl w-full p-6 md:p-10 space-y-6 overflow-hidden">

@@ -6,31 +6,27 @@ import {
   Minimize2,
   Maximize2,
   ArrowRight,
-  MessageCircle,
   MessageSquareQuote,
 } from "lucide-react";
 import React from "react";
 import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 import { guminertBold } from "@/assets/fonts";
-import NeylonAI from "@/assets/images/neylon.jpg";
-import {
-  AssistantKey,
-  RoleAssistantMap,
-  type Screen,
-  TabType,
-  useErrorStore,
-  useSupportWidgetToggleStore,
-  useThreadStore,
-  useUserStore,
-} from "@/store/store";
-import { WidgetIntroText } from "@/components/support-widget/widget-intro-texts";
-import { WidgetChatThreadUI } from "@/components/support-widget/tabs/widget-messages/widget-chat-messages-ui";
-import { WidgetLogin } from "@/components/support-widget/tabs/widget-screens/widget-login";
-import { WidgetFeedback } from "@/components/support-widget/tabs/widget-screens/widget-feedback";
-import CustomerServiceAssistantImage from "@/assets/images/articles/customer-service-assistant.png";
+
 import { useRouter } from "next/navigation";
+import { WidgetTabs, WidgetTabType } from "@/lib/constants";
+import { WidgetIntroText } from "@/components/widget/widget-intro-texts";
+
+import { useErrorStore } from "@/store/error-store";
 import { useSessionStore } from "@/store/session-store";
+import {
+  useWidgetNavigationStore,
+  useWidgetToggleStore,
+} from "@/store/widget-store";
+
+import NeylonAI from "@/assets/images/neylon.jpg";
+import CustomerServiceAssistantImage from "@/assets/images/articles/customer-service-assistant.png";
 
 const blogs = [
   {
@@ -46,18 +42,19 @@ const blogs = [
 ] as const;
 
 export interface WidgetHomeProps {
-  pushScreen?: (tab: TabType, screen: Screen) => void;
-  switchTab?: (tab: TabType) => void;
+  pushScreen?: (tab: WidgetTabType, screen: Screen) => void;
+  switchTab?: (tab: WidgetTabType) => void;
 }
 
-export function WidgetHome({ pushScreen, switchTab }: WidgetHomeProps) {
+export function WidgetHome() {
   const router = useRouter();
-  const { role, assistant } = useUserStore();
-  const { setCurrentThreadId } = useThreadStore();
+  // const { role, assistant } = useUserStore();
+  // const { setCurrentThreadId } = useThreadStore();
   const { setMessage, setStatus } = useErrorStore();
-  const { isOpen, isCollapse, setIsOpen, setCollapse } =
-    useSupportWidgetToggleStore();
-  const { isAuthenticated } = useSessionStore();
+  const { user, isAuthenticated } = useSessionStore();
+
+  const { switchTab } = useWidgetNavigationStore();
+  const { isOpen, isCollapse, setIsOpen, setCollapse } = useWidgetToggleStore();
 
   return (
     <section className="px-2 lg:px-3">
@@ -107,7 +104,7 @@ export function WidgetHome({ pushScreen, switchTab }: WidgetHomeProps) {
       <div className="pb-4 px-2 space-y-6 flex-1">
         {/* Top widgets */}
         <div className="flex flex-col gap-2.5">
-          <button
+          {/* <button
             onClick={() => {
               if (isAuthenticated) {
                 setCurrentThreadId(null);
@@ -135,11 +132,13 @@ export function WidgetHome({ pushScreen, switchTab }: WidgetHomeProps) {
               </div>
             </div>
             <ArrowRight className="text-gray-500 w-5 h-5 group-hover:-rotate-45 transition-all duration-150 ease-in-out" />
-          </button>
+          </button> */}
 
           <button
             onClick={() => {
-              if (switchTab) switchTab(TabType.Contact);
+              if (switchTab) {
+                switchTab(WidgetTabs.Contact);
+              }
             }}
             className="group cursor-pointer bg-white shadow-sm border rounded-xl px-4 pr-6 py-4 flex justify-between items-center"
           >
@@ -159,20 +158,20 @@ export function WidgetHome({ pushScreen, switchTab }: WidgetHomeProps) {
           </button>
 
           <button
-            onClick={() => {
-              if (isAuthenticated) {
-                if (pushScreen) {
-                  pushScreen(TabType.Home, {
-                    component: WidgetFeedback,
-                  });
-                }
-              } else {
-                if (pushScreen) {
-                  pushScreen(TabType.Home, { component: WidgetLogin });
-                }
-                return;
-              }
-            }}
+            // onClick={() => {
+            //   if (isAuthenticated) {
+            //     if (pushScreen) {
+            //       pushScreen(WidgetTabs.Home, {
+            //         screen: WidgetFeedback,
+            //       });
+            //     }
+            //   } else {
+            //     if (pushScreen) {
+            //       pushScreen(TabType.Home, { component: WidgetLogin });
+            //     }
+            //     return;
+            //   }
+            // }}
             className="group cursor-pointer bg-white shadow-sm border rounded-xl px-4 pr-6 py-4 flex justify-between items-center"
           >
             <div className="flex items-center gap-4">
@@ -233,7 +232,7 @@ export function WidgetHome({ pushScreen, switchTab }: WidgetHomeProps) {
                   </h3>
 
                   {/* CTA Button */}
-                  <button
+                  {/* <button
                     onClick={() => {
                       if (isAuthenticated) {
                         if (!role) return;
@@ -274,7 +273,7 @@ export function WidgetHome({ pushScreen, switchTab }: WidgetHomeProps) {
                   >
                     Read More
                     <ArrowRight className="w-4 h-4 text-black group-hover/btn:translate-x-1 transition-transform duration-300" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             ))}

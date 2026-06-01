@@ -1,11 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Mic } from "lucide-react";
 import { CircleStop } from "lucide-react";
 import { ClassicLoader } from "@/components/classic-loader";
+
+import { Button } from "@/components/ui/button";
 import { PromptInputAction } from "@/components/ui/prompt-input";
-import { useErrorStore, useUserStore } from "@/store/store";
+
+import { useErrorStore } from "@/store/error-store";
 
 interface MicButtonProps {
   isRecording: boolean;
@@ -19,7 +21,6 @@ export function MicButton({
   toggleRecording,
 }: MicButtonProps) {
   const { setMessage, setStatus } = useErrorStore();
-  const { tokens } = useUserStore();
 
   return (
     <PromptInputAction tooltip={isRecording ? "Stop Recording" : "Record"}>
@@ -30,12 +31,6 @@ export function MicButton({
           isRecording ? "text-red-400 animate-pulse" : "text-gray-500"
         }`}
         onClick={() => {
-          if (tokens <= 0) {
-            setStatus("error");
-            setMessage("You have no tokens left. Please recharge to continue.");
-            return;
-          }
-
           toggleRecording();
         }}
       >

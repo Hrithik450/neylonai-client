@@ -4,7 +4,7 @@ import React from "react";
 import { Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { WidgetHeader } from "@/components/support-widget/widget-header";
+import { WidgetHeader } from "@/components/widget/widget-header";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Form,

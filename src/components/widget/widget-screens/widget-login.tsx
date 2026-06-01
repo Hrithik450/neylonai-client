@@ -1,6 +1,6 @@
 "use client";
 
-import { WidgetHeader } from "@/components/support-widget/widget-header";
+import { WidgetHeader } from "@/components/widget/widget-header";
 import { signInWithGoogle } from "@/actions/auth/sign-in";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";

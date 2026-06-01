@@ -4,8 +4,12 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { guminertBold } from "@/assets/fonts";
 import { useTypingAnimation } from "@/hooks/use-animation-hook";
-import { useNavigationStore, useSupportWidgetToggleStore } from "@/store/store";
+
 import { useSessionStore } from "@/store/session-store";
+import {
+  useWidgetToggleStore,
+  useWidgetNavigationStore,
+} from "@/store/widget-store";
 
 const texts = [
   "How can I assist you today?",
@@ -16,8 +20,9 @@ const texts = [
 ];
 
 export function WidgetIntroText() {
-  const { activeTab } = useNavigationStore();
-  const { isOpen } = useSupportWidgetToggleStore();
+  const { isOpen } = useWidgetToggleStore();
+  const { activeTab } = useWidgetNavigationStore();
+
   const { user, isAuthenticated } = useSessionStore();
   const { introText, displayText, startAnimation } = useTypingAnimation(
     texts,

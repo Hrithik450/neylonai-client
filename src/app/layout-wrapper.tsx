@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useErrorStore } from "@/store/store";
+import { useErrorStore } from "@/store/error-store";
 import { useSessionStore } from "@/store/session-store";
+
 import { SuccessAlert } from "@/components/success-alert";
 import { FailureAlert } from "@/components/failure-alert";
 import { SessionResponse } from "@/lib/types/request-response";
+
 import { BASE_URL } from "@/lib/services/google-auth";
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {

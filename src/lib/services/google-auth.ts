@@ -26,8 +26,6 @@ export async function loginWithGoogleToken(credential: string) {
 }
 
 export async function logoutFromGoogle() {
-  console.log("CSRF:", getCookie("__Secure-csrftoken"));
-
   return await fetch(`${BASE_URL}/accounts/google/logout/`, {
     method: "POST",
     credentials: "include",

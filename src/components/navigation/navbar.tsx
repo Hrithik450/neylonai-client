@@ -5,22 +5,20 @@ import { guminertBold, guminertRegular } from "@/assets/fonts";
 import { scroller } from "react-scroll";
 import { useRouter, usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import {
-  TabType,
-  useErrorStore,
-  useNavigationStore,
-  useSupportWidgetToggleStore,
-} from "@/store/store";
 import { cn, NavItem, navLists } from "@/lib/utils";
 import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { AuthNavigations } from "./auth-navigation";
-import { loginWithGoogleToken } from "@/lib/services/google-auth";
-import { SessionResponse } from "@/lib/types/request-response";
 import { useSessionStore } from "@/store/session-store";
 import { useGoogleOAuth } from "@/providers/google-oauth-provider";
 import { useGoogleRefButtons } from "@/providers/google-buttons-ref-provider";
-import { useGoogleAuth } from "@/hooks/use-google-auth";
+import { useGoogleAuthHandler } from "@/hooks/use-google-auth-handler";
+
+import {
+  useWidgetNavigationStore,
+  useWidgetToggleStore,
+} from "@/store/widget-store";
+import { WidgetTabs } from "@/lib/constants";
 
 function PageNavigations({
   className,
@@ -31,19 +29,19 @@ function PageNavigations({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { setIsOpen } = useSupportWidgetToggleStore();
-  const { switchTab } = useNavigationStore();
+  const { setIsOpen } = useWidgetToggleStore();
+  const { switchTab } = useWidgetNavigationStore();
 
   const handleNavClick = (action: string) => {
     switch (action) {
       case "insights":
         setIsOpen(true);
-        switchTab(TabType.Home);
+        switchTab(WidgetTabs.Home);
         break;
 
       default:
         setIsOpen(true);
-        switchTab(TabType.Contact);
+        switchTab(WidgetTabs.Contact);
         break;
     }
   };
@@ -84,7 +82,7 @@ function PageNavigations({
             <button
               onClick={() => {
                 setIsOpen(true);
-                switchTab(TabType.Home);
+                switchTab(WidgetTabs.Home);
               }}
               className={cn(
                 "text-xl lg:text-2xl cursor-pointer",
@@ -111,7 +109,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
 
   const { clientId, scriptLoaded } = useGoogleOAuth();
-  const { handleCredential, handleLogout } = useGoogleAuth();
+  const { handleCredential, handleLogout } = useGoogleAuthHandler();
   const { desktopButtonRef, mobileButtonRef } = useGoogleRefButtons();
 
   const { isAuthenticated, sessionChecked } = useSessionStore();

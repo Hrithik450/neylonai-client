@@ -5,20 +5,20 @@ import { cn } from "@/lib/utils";
 import NeylonAI from "@/assets/images/neylon.jpg";
 import { guminertMedium, guminertRegular } from "@/assets/fonts";
 import {
-  TabType,
-  useNavigationStore,
-  useSupportWidgetToggleStore,
-} from "@/store/store";
+  useWidgetNavigationStore,
+  useWidgetToggleStore,
+} from "@/store/widget-store";
+import { WidgetTabs } from "@/lib/constants";
 
 export function CTASection() {
-  const { switchTab } = useNavigationStore();
-  const { setIsOpen } = useSupportWidgetToggleStore();
+  const { setIsOpen } = useWidgetToggleStore();
+  const { switchTab } = useWidgetNavigationStore();
 
   return (
     <section
       className={cn(
         guminertRegular.className,
-        "my-4 md:my-16 px-3 md:px-5 xl:px-10 2xl:px-15 relative text-center overflow-hidden"
+        "my-4 md:my-16 px-3 md:px-5 xl:px-10 2xl:px-15 relative text-center overflow-hidden",
       )}
     >
       {/* <div className="absolute inset-0 bg-gradient-to-b from-[#0d3129]/10 via-transparent to-white pointer-events-none" /> */}
@@ -35,7 +35,7 @@ export function CTASection() {
       <h1
         className={cn(
           "text-3xl md:text-5xl xl:text-6xl font-bold max-w-4xl mx-auto leading-tight",
-          guminertMedium.className
+          guminertMedium.className,
         )}
       >
         Power Conversations. Amplify Intelligence.
@@ -53,7 +53,7 @@ export function CTASection() {
         <button
           onClick={() => {
             setIsOpen(true);
-            switchTab(TabType.Contact);
+            switchTab(WidgetTabs.Contact);
           }}
           className="cursor-pointer border border-[#0d3129] bg-[#0d3129] hover:bg-white text-white hover:text-[#0d3129] shadow-sm rounded-full py-3 px-10 text-lg transition-all duration-300"
         >

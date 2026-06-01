@@ -11,6 +11,56 @@ import {
   MessageSquare,
 } from "lucide-react";
 
+export const HomeScreens = {
+  Home: "HomeScreen",
+} as const;
+
+export const MessagesScreens = {
+  Messages: "MessagesScreen",
+  Assistant: "AssistantScreeen",
+} as const;
+
+export const ContactScreens = {
+  Contact: "ContactScreen",
+} as const;
+
+export const SettingsScreens = {
+  Settings: "SettingsScreen",
+} as const;
+
+export type HomeScreensType = (typeof HomeScreens)[keyof typeof HomeScreens];
+
+export type MessagesScreensType =
+  (typeof MessagesScreens)[keyof typeof MessagesScreens];
+
+export type ContactScreensType =
+  (typeof ContactScreens)[keyof typeof ContactScreens];
+
+export type SettingsScreensType =
+  (typeof SettingsScreens)[keyof typeof SettingsScreens];
+
+export const WidgetScreens = {
+  HomeScreens: HomeScreens,
+  MessagesScreens: MessagesScreens,
+  ContactScreens: ContactScreens,
+  SettingsScreens: SettingsScreens,
+};
+
+export type WidgetScreenType =
+  | HomeScreensType
+  | MessagesScreensType
+  | ContactScreensType
+  | SettingsScreensType;
+
+export const WidgetTabs = {
+  Home: "Home",
+  Messages: "Messages",
+  Contact: "Contact",
+  Settings: "Settings",
+} as const;
+
+export type WidgetTabType = (typeof WidgetTabs)[keyof typeof WidgetTabs];
+
 export const faqs = [
   {
     question: "How quickly can I get started?",
@@ -57,7 +107,7 @@ export const robotIcons = [
   MessageSquare,
 ];
 
-export const messageSets = {
+export const thinkingPhases = {
   default: [
     "Analyzing your request...",
     "Parsing semantic intent...",

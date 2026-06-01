@@ -1,20 +1,23 @@
 "use client";
 
 import React from "react";
-import { WidgetHeader } from "@/components/support-widget/widget-header";
+import { WidgetHeader } from "@/components/widget/widget-header";
 import { ChevronRight, HelpCircle } from "lucide-react";
 import { cn, shortTimeAgo } from "@/lib/utils";
 import { guminertRegular } from "@/assets/fonts";
-import {
-  type Screen,
-  TabType,
-  useThreadStore,
-  useUserStore,
-} from "@/store/store";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { ThreadsResponse } from "@/actions/threads/threads.types";
-import { WidgetChatThreadUI } from "@/components/support-widget/tabs/widget-messages/widget-chat-messages-ui";
-import { robotIcons } from "@/lib/constants";
+import {
+  robotIcons,
+  WidgetScreens,
+  WidgetTabs,
+  WidgetTabType,
+} from "@/lib/constants";
+
+import { useThreadStore } from "@/store/store";
+import { useSessionStore } from "@/store/session-store";
+import { useWidgetNavigation } from "@/hooks/use-widget-navigation";
 
 interface MessagePreviewProps {
   Icon: React.ElementType;
@@ -74,7 +77,7 @@ function AskQuestionButton({
       className={cn(
         "cursor-pointer flex items-center justify-between gap-2 px-4 py-2 bg-black hover:bg-black/85 hover:scale-105 text-white rounded-lg shadow-lg transition-transform",
         guminertRegular.className,
-        className
+        className,
       )}
     >
       {/* Text Label */}
@@ -93,25 +96,23 @@ function AskQuestionButton({
   );
 }
 
-interface WidgetAssistantProps {
-  pushScreen: (tab: TabType, screen: Screen) => void;
-}
-
-export function WidgetAssistant({
-  pushScreen,
-}: WidgetAssistantProps): React.JSX.Element {
+export function WidgetMessages() {
   const [loading, setLoading] = React.useState<boolean>(false);
+
+  const { user } = useSessionStore();
   const { threads, setThreads, setCurrentThreadId } = useThreadStore();
-  const { currentUserId } = useUserStore();
+
+  const { navigate } = useWidgetNavigation();
 
   React.useEffect(() => {
+    if (!user || !user.id) return;
     if (threads && threads.length > 0) return;
 
     const fetchThreads = async () => {
       try {
         setLoading(true);
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/core-manager/api/v1/threads/user/${currentUserId}/`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/core-manager/api/v1/threads/user/${user.id}/`,
         );
         const data: ThreadsResponse = await res.json();
 
@@ -130,8 +131,8 @@ export function WidgetAssistant({
       }
     };
 
-    if (currentUserId && !threads) fetchThreads();
-  }, [currentUserId, threads, setThreads]);
+    if (user?.id && !threads) fetchThreads();
+  }, [user?.id, threads, setThreads]);
 
   return (
     <section className="relative h-full">
@@ -166,10 +167,11 @@ export function WidgetAssistant({
               timestamp={shortTimeAgo(thread.created_at)}
               Icon={robotIcons[index % robotIcons.length]}
               action={() =>
-                pushScreen(TabType.Messages, {
-                  component: WidgetChatThreadUI,
-                  props: { id: thread.id, title: thread.title },
-                })
+                navigate(
+                  WidgetTabs.Messages,
+                  WidgetScreens.MessagesScreens.Assistant,
+                  { id: thread.id, title: thread.title },
+                )
               }
             />
           ))
@@ -188,10 +190,10 @@ export function WidgetAssistant({
           className="w-max"
           onClick={() => {
             setCurrentThreadId(null);
-            pushScreen(TabType.Messages, {
-              component: WidgetChatThreadUI,
-              props: { id: null, title: null },
-            });
+            navigate(
+              WidgetTabs.Messages,
+              WidgetScreens.MessagesScreens.Assistant,
+            );
           }}
         />
       </div>

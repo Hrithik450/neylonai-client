@@ -1,32 +1,37 @@
 "use client";
 
-import { guminertBold, guminertMedium, guminertRegular } from "@/assets/fonts";
-import { WidgetHome } from "@/components/support-widget/tabs/widget-home";
-import { ChartRadarLegend } from "@/components/ui/charts/radar-chart";
+import React from "react";
+import Image from "next/image";
+import { Link as ScrollLink } from "react-scroll";
 import { ArrowDownRight, BadgeCheck, Cpu, Play } from "lucide-react";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+
 import IphoneFrameImage from "@/assets/images/iphone-frame.png";
 import HeroImage from "@/assets/images/hero_background_3.jpg";
-import { Link as ScrollLink } from "react-scroll";
+import { guminertBold, guminertMedium, guminertRegular } from "@/assets/fonts";
+
+import { ChartRadarLegend } from "@/components/ui/charts/radar-chart";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+
+import { WidgetTabs } from "@/lib/constants";
+import { WidgetHome } from "../widget/widget-tabs/widget-home";
+
 import {
-  TabType,
-  useNavigationStore,
-  useSupportWidgetToggleStore,
-} from "@/store/store";
-import React from "react";
+  useWidgetNavigationStore,
+  useWidgetToggleStore,
+} from "@/store/widget-store";
 
 export function Hero2() {
-  const { setIsOpen } = useSupportWidgetToggleStore();
-  const { switchTab } = useNavigationStore();
+  const { setIsOpen } = useWidgetToggleStore();
+  const { switchTab } = useWidgetNavigationStore();
 
   return (
     <section
       id="home"
       className={cn(
         guminertRegular.className,
-        "py-4 px-3 md:px-5 h-max md:h-[1240px] xl:h-[1160px] overflow-hidden",
+        "py-4 px-3 md:px-5 h-max md:h-310 xl:h-290 overflow-hidden",
       )}
     >
       <div className="relative rounded-2xl overflow-hidden px-3 md:px-6 pt-26 md:pt-34">
@@ -74,7 +79,7 @@ export function Hero2() {
           <button
             onClick={() => {
               setIsOpen(true);
-              switchTab(TabType.Home);
+              switchTab(WidgetTabs.Home);
             }}
             className="flex items-center gap-2 bg-[#0E3228] text-white text-sm md:text-lg border border-gray-400 rounded-full p-2.5 px-4 md:px-8 cursor-pointer group overflow-hidden"
           >
@@ -125,7 +130,7 @@ export function Hero2() {
               </div>
 
               <div className="flex-1 flex flex-col gap-2 justify-around items-start">
-                <h3 className="text-md md:text-xl max-w-[270px] max-xl:text-center font-semibold">
+                <h3 className="text-md md:text-xl max-w-67.5 max-xl:text-center font-semibold">
                   Delivering Unmatched AI Solutions for Businesses.
                 </h3>
 

@@ -2,22 +2,24 @@
 
 import React from "react";
 import { Brain } from "lucide-react";
-import { messageSets } from "@/lib/constants";
-import { useAssistantStore } from "@/store/store";
+import { useWidgetStore } from "@/store/widget-store";
+import { thinkingPhases } from "@/lib/constants";
 
 export function DynamicAssistantTyping({ speed = 2000 }: { speed?: number }) {
-  const { thinkingPhase, assistantTyping } = useAssistantStore();
+  const { thinkingPhase, assistantTyping } = useWidgetStore();
 
-  const [thoughts, setThoughts] = React.useState<string[]>(messageSets.default);
+  const [thoughts, setThoughts] = React.useState<string[]>(
+    thinkingPhases.default,
+  );
   const [msgIndex, setMsgIndex] = React.useState<number>(0);
 
   React.useEffect(() => {
     const newThoughts =
-      messageSets[thinkingPhase as keyof typeof messageSets] ||
-      messageSets.default;
+      thinkingPhases[thinkingPhase as keyof typeof thinkingPhases] ||
+      thinkingPhases.default;
 
-    setThoughts(newThoughts);
     setMsgIndex(0);
+    setThoughts(newThoughts);
   }, [thinkingPhase]);
 
   React.useEffect(() => {
