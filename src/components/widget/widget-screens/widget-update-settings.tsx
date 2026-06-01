@@ -27,7 +27,6 @@ import {
   RoleAssistantMap,
   roleEnum,
   RoleKey,
-  useUserStore,
 } from "@/store/store";
 import { guminertRegular } from "@/assets/fonts";
 import { AssistantDisplayMap, RoleDisplayMap } from "@/store/store";
@@ -53,7 +52,6 @@ export function WidgetUpdateSettings({
   role: RoleKey | null;
   assistant: AssistantKey;
 }) {
-  const { currentUserId, setRole, setAssistant } = useUserStore();
   const [loading, setLoading] = React.useState(false);
 
   const form = useForm<z.infer<typeof updateProfileSchema>>({
@@ -74,38 +72,33 @@ export function WidgetUpdateSettings({
   }, [selectedRole]);
 
   const onSubmit = async (data: z.infer<typeof updateProfileSchema>) => {
-    console.log("Profile data:", data);
-
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/core-manager/api/v1/user/${currentUserId}/`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        },
-      );
-      const updatedData = await response.json();
-
-      if (!updatedData.success && updatedData.error) {
-        setStatus("error");
-        setMessage(updatedData.error);
-      }
-
-      setRole(updatedData.data.role as RoleKey);
-      setAssistant(updatedData.data.assistant as AssistantKey);
-      popScreen();
-      setStatus("saved");
-      setMessage("Your profile settings has been updated.");
-
-      form.reset();
-    } catch (error) {
-      console.error("Error occured:", error);
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
+    // try {
+    //   setLoading(true);
+    //   const response = await fetch(
+    //     `${process.env.NEXT_PUBLIC_BACKEND_URL}/core-manager/api/v1/user/${currentUserId}/`,
+    //     {
+    //       method: "PUT",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify(data),
+    //     },
+    //   );
+    //   const updatedData = await response.json();
+    //   if (!updatedData.success && updatedData.error) {
+    //     setStatus("error");
+    //     setMessage(updatedData.error);
+    //   }
+    //   setRole(updatedData.data.role as RoleKey);
+    //   setAssistant(updatedData.data.assistant as AssistantKey);
+    //   popScreen();
+    //   setStatus("saved");
+    //   setMessage("Your profile settings has been updated.");
+    //   form.reset();
+    // } catch (error) {
+    //   console.error("Error occured:", error);
+    //   setLoading(false);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

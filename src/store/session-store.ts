@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 export interface SessionUser {
   id: number;
@@ -19,31 +19,50 @@ interface SessionStore {
   setAuthenticated: (value: boolean) => void;
   setLoading: (value: boolean) => void;
   setSessionChecked: (value: boolean) => void;
+  clearSession: () => void;
 }
 
 export const useSessionStore = create<SessionStore>()(
-  devtools((set) => ({
-    user: null,
-    isLoading: false,
-    isAuthenticated: false,
-    sessionChecked: false,
+  devtools(
+    persist(
+      (set) => ({
+        user: null,
+        isLoading: false,
+        isAuthenticated: false,
+        sessionChecked: false,
 
-    setUser: (user) =>
-      set({
-        user,
-        isAuthenticated: Boolean(user),
+        setUser: (user) =>
+          set({
+            user,
+
+            isAuthenticated: Boolean(user),
+          }),
+
+        setLoading: (value) =>
+          set({
+            isLoading: value,
+          }),
+
+        setAuthenticated: (value) =>
+          set({
+            isAuthenticated: value,
+          }),
+
+        setSessionChecked: (value) =>
+          set({
+            sessionChecked: value,
+          }),
+
+        clearSession: () =>
+          set({
+            user: null,
+            isAuthenticated: false,
+            sessionChecked: false,
+          }),
       }),
-
-    setLoading: (value) =>
-      set({
-        isLoading: value,
-      }),
-
-    setAuthenticated: (value) =>
-      set({
-        isAuthenticated: value,
-      }),
-
-    setSessionChecked: (value) => set({ sessionChecked: value }),
-  })),
+      {
+        name: "neylon-session",
+      },
+    ),
+  ),
 );

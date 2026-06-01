@@ -15,7 +15,7 @@ export async function loginWithGoogleToken(credential: string) {
   const formData = new URLSearchParams();
   formData.append("credential", credential);
 
-  return await fetch(`${BASE_URL}/accounts/google/login/one-tap/`, {
+  return await fetch(`${BASE_URL}/api/v1/google-login/`, {
     method: "POST",
     credentials: "include",
     headers: {

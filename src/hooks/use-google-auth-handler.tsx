@@ -39,8 +39,8 @@ export function useGoogleAuthHandler() {
         return;
       }
 
-      if (responseData.data?.user) {
-        setUser(responseData.data.user);
+      if (responseData.user) {
+        setUser(responseData.user);
         setStatus("saved");
         setMessage("Google Authentication Successful!");
       }

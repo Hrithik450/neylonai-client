@@ -12,23 +12,31 @@ import { BASE_URL } from "@/lib/services/google-auth";
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const { status, message, setStatus, setMessage } = useErrorStore();
-  const { setSessionChecked, setLoading, setUser } = useSessionStore();
+  const { setSessionChecked, clearSession, setLoading, setUser } =
+    useSessionStore();
 
   useEffect(() => {
     const fetchSession = async () => {
       try {
         setLoading(true);
 
-        const response = await fetch(`${BASE_URL}/api/users/me/`, {
+        const response = await fetch(`${BASE_URL}/api/v1/me/`, {
           credentials: "include",
         });
+        if (!response.ok) {
+          clearSession();
+          return;
+        }
+
         const responseData: SessionResponse = await response.json();
 
-        if (responseData.data) {
-          setUser(responseData.data.user);
+        if (responseData.success && responseData.user) {
+          setUser(responseData.user);
+        } else {
+          clearSession();
         }
       } catch (err) {
-        setUser(null);
+        clearSession();
         console.error("session error: ", err);
       } finally {
         setLoading(false);
