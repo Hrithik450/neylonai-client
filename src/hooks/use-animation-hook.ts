@@ -30,7 +30,7 @@ export function useTypingAnimation(texts: string[], introTextFull: string) {
         }
       }, 70);
     },
-    [texts]
+    [texts],
   );
 
   const startAnimation = React.useCallback(() => {

@@ -1,5 +1,3 @@
-import { thinkingPhases } from "@/lib/constants";
-
 import { useErrorStore } from "@/store/error-store";
 import { useInputStore } from "@/store/input-store";
 import { useWidgetStore } from "@/store/widget-store";
@@ -153,14 +151,6 @@ export function useWidgetMessageHandler() {
             case "done":
               setDisableInput(false);
               setAssistantTyping(false);
-              break;
-
-            case "humanError":
-              setDisableInput(false);
-              setAssistantTyping(false);
-
-              setStatus("error");
-              setMessage(payload.data.error);
               break;
 
             case "error":

@@ -11,7 +11,7 @@ import { ConversationUI } from "@/components/widget/conversation-ui";
 import { useWidgetNavigation } from "@/hooks/use-widget-navigation";
 import { useThreadMessageStore, useThreadStore } from "@/store/thread-store";
 
-import { useWidgetMessageHandler } from "@/hooks/use-widget-assistant";
+import { useWidgetMessageHandler } from "@/hooks/use-message-handler";
 
 import { ThreadMessagesRespone } from "@/lib/types/types";
 import { BASE_URL } from "@/lib/services/google-auth";
