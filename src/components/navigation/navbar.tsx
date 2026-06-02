@@ -7,18 +7,14 @@ import { useRouter, usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn, NavItem, navLists } from "@/lib/utils";
 import Image from "next/image";
-import React, { useEffect } from "react";
-import { AuthNavigations } from "./auth-navigation";
-import { useSessionStore } from "@/store/session-store";
-import { useGoogleOAuth } from "@/providers/google-oauth-provider";
-import { useGoogleRefButtons } from "@/providers/google-buttons-ref-provider";
-import { useGoogleAuthHandler } from "@/hooks/use-google-auth-handler";
+import React from "react";
 
 import {
   useWidgetNavigationStore,
   useWidgetToggleStore,
 } from "@/store/widget-store";
 import { WidgetTabs } from "@/lib/constants";
+import { AuthNavigation } from "./auth-navigation";
 
 function PageNavigations({
   className,
@@ -108,40 +104,6 @@ function PageNavigations({
 export function Navbar() {
   const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
 
-  const { clientId, scriptLoaded } = useGoogleOAuth();
-  const { handleCredential, handleLogout } = useGoogleAuthHandler();
-  const { desktopButtonRef, mobileButtonRef } = useGoogleRefButtons();
-
-  const { isAuthenticated, sessionChecked } = useSessionStore();
-
-  useEffect(() => {
-    if (!scriptLoaded || !window.google) return;
-    if (isAuthenticated || !sessionChecked) return;
-
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleCredential,
-    });
-
-    if (desktopButtonRef.current) {
-      window.google.accounts.id.renderButton(desktopButtonRef.current, {
-        theme: "outline",
-        size: "large",
-        shape: "pill",
-        text: "signin_with",
-      });
-    }
-
-    if (mobileButtonRef.current) {
-      window.google.accounts.id.renderButton(mobileButtonRef.current, {
-        theme: "outline",
-        size: "large",
-        shape: "pill",
-        text: "signin_with",
-      });
-    }
-  }, [scriptLoaded, isAuthenticated, sessionChecked]);
-
   return (
     <header
       id="header"
@@ -180,11 +142,7 @@ export function Navbar() {
 
         {/* Desktop Buttons */}
         <div className="md:flex-1 flex justify-end">
-          <AuthNavigations
-            buttonRef={desktopButtonRef}
-            handleLogout={handleLogout}
-            className="ml-auto max-lg:hidden"
-          />
+          <AuthNavigation className="ml-auto max-lg:hidden" />
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -216,11 +174,7 @@ export function Navbar() {
             itemClassName="text-base md:text-lg"
           />
 
-          <AuthNavigations
-            buttonRef={mobileButtonRef}
-            handleLogout={handleLogout}
-            className="flex-col mt-4"
-          />
+          <AuthNavigation className="flex-col mt-4" />
         </div>
       </nav>
     </header>

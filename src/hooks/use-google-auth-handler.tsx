@@ -4,27 +4,14 @@ import { useCallback } from "react";
 import { useErrorStore } from "@/store/error-store";
 import { useSessionStore } from "@/store/session-store";
 import type { UserResponse } from "@/lib/types/types";
-import { useGoogleRefButtons } from "@/providers/google-buttons-ref-provider";
 import { loginWithGoogle, logoutFromGoogle } from "@/lib/services/google-auth";
 
 export function useGoogleAuthHandler() {
-  const { desktopButtonRef, mobileButtonRef } = useGoogleRefButtons();
-
   const { setUser, setLoading } = useSessionStore();
   const { setMessage, setStatus } = useErrorStore();
 
-  const clearButtons = () => {
-    if (desktopButtonRef.current) {
-      desktopButtonRef.current.innerHTML = "";
-    }
-    if (mobileButtonRef.current) {
-      mobileButtonRef.current.innerHTML = "";
-    }
-  };
-
-  const handleCredential = useCallback(async (res: any) => {
+  const handleLogin = useCallback(async (res: any) => {
     try {
-      clearButtons();
       setLoading(true);
 
       const response = await loginWithGoogle(res.credential);
@@ -55,19 +42,9 @@ export function useGoogleAuthHandler() {
   const handleLogout = async () => {
     try {
       const response = await logoutFromGoogle();
-      console.log("status", response.status);
-      const text = await response.text();
-      console.log("body", text);
 
       if (response.ok) {
         setUser(null);
-        window.google.accounts.id.disableAutoSelect();
-
-        setUser(null);
-
-        setTimeout(() => {
-          window.google.accounts.id.prompt();
-        }, 100);
       }
     } catch (err) {
       setStatus("error");
@@ -75,5 +52,5 @@ export function useGoogleAuthHandler() {
       console.error("Logout failed:", err);
     }
   };
-  return { handleCredential, handleLogout };
+  return { handleLogin, handleLogout };
 }

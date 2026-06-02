@@ -1,21 +1,19 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils";
-import { useSessionStore } from "@/store/session-store";
 import Image from "next/image";
+
+import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
+
 import { LoadingDots } from "../dot-loader";
 
-export function AuthNavigations({
-  className,
-  buttonRef,
-  handleLogout,
-}: {
-  className: string;
-  handleLogout: () => void;
-  buttonRef: React.Ref<HTMLDivElement | null>;
-}) {
+import { GoogleLogin } from "@react-oauth/google";
+import { useSessionStore } from "@/store/session-store";
+import { useGoogleAuthHandler } from "@/hooks/use-google-auth-handler";
+
+export function AuthNavigation({ className }: { className: string }) {
+  const { handleLogin, handleLogout } = useGoogleAuthHandler();
   const { user, isLoading, isAuthenticated } = useSessionStore();
 
   if (isLoading) {
@@ -68,7 +66,13 @@ export function AuthNavigations({
 
   return (
     <div className={cn("flex items-center", className)}>
-      <div ref={buttonRef} />
+      <GoogleLogin
+        shape="pill"
+        onSuccess={handleLogin}
+        onError={() => {
+          console.error("Google login failed");
+        }}
+      />
     </div>
   );
 }

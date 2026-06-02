@@ -1,14 +1,14 @@
 import "./globals.css";
 
-import React, { Suspense } from "react";
 import type { Metadata } from "next";
-import { Navbar } from "@/components/navigation/navbar";
+import React, { Suspense } from "react";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Navbar } from "@/components/navigation/navbar";
+
 import { AIChat } from "@/components/widget/widget-toggle";
-import { GoogleOAuthProvider } from "@/providers/google-oauth-provider";
-import { GoogleOneTap } from "@/components/auth/google-one-tap";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 import { LayoutWrapper } from "./layout-wrapper";
-import { GoogleButtonsRefProvider } from "@/providers/google-buttons-ref-provider";
 
 export const metadata: Metadata = {
   title: "Neylon AI",
@@ -30,18 +30,15 @@ export default function RootLayout({
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
         >
-          <GoogleButtonsRefProvider>
-            <NuqsAdapter>
-              <LayoutWrapper>
-                <Suspense fallback={null}>
-                  <GoogleOneTap />
-                  <Navbar />
-                  {children}
-                  <AIChat />
-                </Suspense>
-              </LayoutWrapper>
-            </NuqsAdapter>
-          </GoogleButtonsRefProvider>
+          <NuqsAdapter>
+            <LayoutWrapper>
+              <Suspense fallback={null}>
+                <Navbar />
+                {children}
+                <AIChat />
+              </Suspense>
+            </LayoutWrapper>
+          </NuqsAdapter>
         </GoogleOAuthProvider>
       </body>
     </html>
