@@ -1,9 +1,14 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 function getCookie(name: string): string | null {
-  const cookies = document.cookie.split("; ");
-  const cookie = cookies.find((c) => c.startsWith(`${name}=`));
-  return cookie ? cookie.split("=")[1] : null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+
+  if (parts.length === 2) {
+    return parts.pop()?.split(";").shift() ?? null;
+  }
+
+  return null;
 }
 
 export async function loginWithGoogle(credential: string) {
