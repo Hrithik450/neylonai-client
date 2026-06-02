@@ -2,6 +2,8 @@ export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 function getCookie(name: string): string | null {
   const value = `; ${document.cookie}`;
+  console.log("cookie: ", value);
+
   const parts = value.split(`; ${name}=`);
 
   if (parts.length === 2) {
