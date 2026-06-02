@@ -22,7 +22,17 @@ export function GoogleOneTap() {
 
     window.google.accounts.id.prompt((notification: any) => {
       if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        console.log("One Tap skipped:", notification.getNotDisplayedReason());
+        console.log("not displayed:", notification.isNotDisplayed());
+
+        console.log("skipped:", notification.isSkippedMoment());
+
+        console.log("dismissed:", notification.isDismissedMoment());
+
+        console.log("reason:", notification.getNotDisplayedReason?.());
+
+        console.log("skip reason:", notification.getSkippedReason?.());
+
+        console.log("dismiss reason:", notification.getDismissedReason?.());
       }
     });
   }, [scriptLoaded, isAuthenticated, sessionChecked]);

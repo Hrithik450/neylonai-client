@@ -55,8 +55,19 @@ export function useGoogleAuthHandler() {
   const handleLogout = async () => {
     try {
       const response = await logoutFromGoogle();
+      console.log("status", response.status);
+      const text = await response.text();
+      console.log("body", text);
+
       if (response.ok) {
         setUser(null);
+        window.google.accounts.id.disableAutoSelect();
+
+        setUser(null);
+
+        setTimeout(() => {
+          window.google.accounts.id.prompt();
+        }, 100);
       }
     } catch (err) {
       setStatus("error");
