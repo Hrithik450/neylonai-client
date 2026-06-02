@@ -22,7 +22,7 @@ export const navLists: Array<NavItem> = [
 ];
 
 export function loadVideoElement(
-  src: string
+  src: string,
 ): Promise<{ width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const video = document.createElement("video");

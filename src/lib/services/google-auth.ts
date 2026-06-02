@@ -1,17 +1,6 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-function getCookie(name: string) {
-  const cookies = document.cookie.split("; ");
-
-  for (const cookie of cookies) {
-    const [key, value] = cookie.split("=");
-    if (key === name) return value;
-  }
-
-  return null;
-}
-
-export async function loginWithGoogleToken(credential: string) {
+export async function loginWithGoogle(credential: string) {
   const formData = new URLSearchParams();
   formData.append("credential", credential);
 
@@ -26,12 +15,11 @@ export async function loginWithGoogleToken(credential: string) {
 }
 
 export async function logoutFromGoogle() {
-  return await fetch(`${BASE_URL}/accounts/google/logout/`, {
+  return await fetch(`${BASE_URL}/api/v1/logout/`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("__Secure-csrftoken") || "",
     },
   });
 }

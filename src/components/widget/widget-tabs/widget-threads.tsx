@@ -7,19 +7,16 @@ import { cn, shortTimeAgo } from "@/lib/utils";
 import { guminertRegular } from "@/assets/fonts";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { ThreadsResponse } from "@/actions/threads/threads.types";
-import {
-  robotIcons,
-  WidgetScreens,
-  WidgetTabs,
-  WidgetTabType,
-} from "@/lib/constants";
 
-import { useThreadStore } from "@/store/store";
+import { robotIcons, WidgetScreens, WidgetTabs } from "@/lib/constants";
+
 import { useSessionStore } from "@/store/session-store";
 import { useWidgetNavigation } from "@/hooks/use-widget-navigation";
+import { useThreadStore } from "@/store/thread-store";
+import { ThreadsResponse } from "@/lib/types/types";
+import { BASE_URL } from "@/lib/services/google-auth";
 
-interface MessagePreviewProps {
+interface ThreadPreviewProps {
   Icon: React.ElementType;
   sender_name: string;
   thread_title: string;
@@ -27,13 +24,13 @@ interface MessagePreviewProps {
   action: () => void;
 }
 
-function MessagePreview({
+function ThreadPreview({
   Icon,
   thread_title,
   sender_name,
   timestamp,
   action,
-}: MessagePreviewProps): React.JSX.Element {
+}: ThreadPreviewProps): React.JSX.Element {
   return (
     <div
       onClick={action}
@@ -96,13 +93,13 @@ function AskQuestionButton({
   );
 }
 
-export function WidgetMessages() {
+export function WidgetThreads() {
   const [loading, setLoading] = React.useState<boolean>(false);
+
+  const { navigate } = useWidgetNavigation();
 
   const { user } = useSessionStore();
   const { threads, setThreads, setCurrentThreadId } = useThreadStore();
-
-  const { navigate } = useWidgetNavigation();
 
   React.useEffect(() => {
     if (!user || !user.id) return;
@@ -111,9 +108,7 @@ export function WidgetMessages() {
     const fetchThreads = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/core-manager/api/v1/threads/user/${user.id}/`,
-        );
+        const res = await fetch(`${BASE_URL}/api/v1/threads/user/${user.id}/`);
         const data: ThreadsResponse = await res.json();
 
         if (!data.success) {
@@ -160,17 +155,17 @@ export function WidgetMessages() {
 
         {!loading && threads && threads.length > 0 ? (
           threads.map((thread, index) => (
-            <MessagePreview
+            <ThreadPreview
               key={thread.id}
               sender_name="Assistant"
               thread_title={thread.title}
-              timestamp={shortTimeAgo(thread.created_at)}
+              timestamp={shortTimeAgo(new Date(thread.created_at))}
               Icon={robotIcons[index % robotIcons.length]}
               action={() =>
                 navigate(
                   WidgetTabs.Messages,
-                  WidgetScreens.MessagesScreens.Assistant,
-                  { id: thread.id, title: thread.title },
+                  WidgetScreens.MessagesScreens.Messages,
+                  { threadId: thread.id, title: thread.title },
                 )
               }
             />
@@ -192,7 +187,7 @@ export function WidgetMessages() {
             setCurrentThreadId(null);
             navigate(
               WidgetTabs.Messages,
-              WidgetScreens.MessagesScreens.Assistant,
+              WidgetScreens.MessagesScreens.Messages,
             );
           }}
         />

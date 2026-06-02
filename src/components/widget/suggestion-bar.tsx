@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useInputStore } from "@/store/store";
+import { useInputStore } from "@/store/input-store";
 import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
 
 // const suggestions = [
@@ -81,7 +81,7 @@ export function SuggestionBar() {
       .filter((s) => s.toLowerCase().includes(query))
       .sort(
         (a, b) =>
-          a.toLowerCase().indexOf(query) - b.toLowerCase().indexOf(query)
+          a.toLowerCase().indexOf(query) - b.toLowerCase().indexOf(query),
       );
   }, [input]);
 

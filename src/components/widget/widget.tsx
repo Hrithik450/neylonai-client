@@ -12,13 +12,13 @@ import type { WidgetScreenType, WidgetTabType } from "@/lib/constants";
 import { WidgetHome } from "@/components/widget/widget-tabs/widget-home";
 import { WigetContact } from "@/components/widget/widget-tabs/widget-contact";
 import { WidgetSettings } from "@/components/widget/widget-tabs/widget-settings";
-import { WidgetMessages } from "@/components/widget/widget-tabs/widget-messages";
+import { WidgetThreads } from "@/components/widget/widget-tabs/widget-threads";
 
 import {
   useWidgetToggleStore,
   useWidgetNavigationStore,
 } from "@/store/widget-store";
-import { WidgetAssistant } from "@/components/widget/widget-screens/widget-assistant";
+import { WidgetMessages } from "@/components/widget/widget-screens/widget-messages";
 
 // Make sure to add default screen into tabStacks of zustand store after modifying registry.
 // Because less coupling is done for developer friendly.
@@ -35,8 +35,8 @@ const TabsRegistry = {
     icon: <MessageSquareText className="w-6 h-6" />,
     label: WidgetTabs.Messages,
     screens: {
+      [WidgetScreens.MessagesScreens.Threads]: WidgetThreads,
       [WidgetScreens.MessagesScreens.Messages]: WidgetMessages,
-      [WidgetScreens.MessagesScreens.Assistant]: WidgetAssistant,
     },
     default: WidgetScreens.MessagesScreens.Messages,
   },

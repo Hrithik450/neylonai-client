@@ -5,15 +5,16 @@ import { cn } from "@/lib/utils";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import ReactMarkdown from "react-markdown";
+import { ChevronsDown, Copy } from "lucide-react";
 import { useWidgetStore } from "@/store/widget-store";
-import { ChevronsDown, Copy, FileText } from "lucide-react";
-import { NewMessage } from "@/actions/thread_messages/thread_messages.types";
+
+import { ThreadMessage } from "@/lib/types/types";
 import { DynamicAssistantTyping } from "@/components/widget/assistant-typing";
 
 export function ConversationUI({
   conversations,
 }: {
-  conversations?: NewMessage[];
+  conversations?: ThreadMessage[];
 }) {
   const { assistantTyping } = useWidgetStore();
 
@@ -142,7 +143,7 @@ export function ConversationUI({
                   </ReactMarkdown>
                 </div>
 
-                {conversation.file_url && (
+                {/* {conversation.file_url && (
                   <div className="max-w-max mr-auto flex items-center gap-3 p-2 bg-white/40 border border-black/20 rounded-xl transition-all duration-200">
                     <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-red-50">
                       <FileText className="w-5 h-5 text-red-500" />
@@ -166,11 +167,11 @@ export function ConversationUI({
                       View
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
             ) : (
               <div className="flex flex-col gap-1">
-                {conversation.file_url && (
+                {/* {conversation.file_url && (
                   <div className="ml-auto flex items-center gap-3 p-1 pr-2 bg-white/40 border border-black/30 rounded-xl transition-all duration-200">
                     <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-red-50">
                       <FileText className="w-5 h-5 text-red-500" />
@@ -189,7 +190,7 @@ export function ConversationUI({
                       View
                     </a>
                   </div>
-                )}
+                )} */}
 
                 <p className="py-3 px-4 bg-zinc-200/90 border border-black/50 text-sm md:text-base leading-relaxed rounded-xl">
                   {conversation.content}
@@ -198,12 +199,7 @@ export function ConversationUI({
             )}
 
             {conversation.role === "assistant" && (
-              <div
-                className={cn(
-                  "flex justify-start space-x-2",
-                  conversation.file_url ? "mt-2" : "mt-0",
-                )}
-              >
+              <div className={cn("flex justify-start space-x-2")}>
                 <button
                   onClick={() => copyToClipboard(conversation.content)}
                   className="text-gray-500 hover:text-gray-700 cursor-pointer"

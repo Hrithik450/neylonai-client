@@ -54,7 +54,7 @@ export const useWidgetNavigationStore = create<WidgetNavigationStore>()(
     tabStacks: {
       [WidgetTabs.Home]: { stack: [{ name: WidgetScreens.HomeScreens.Home }] },
       [WidgetTabs.Messages]: {
-        stack: [{ name: WidgetScreens.MessagesScreens.Messages }],
+        stack: [{ name: WidgetScreens.MessagesScreens.Threads }],
       },
       [WidgetTabs.Contact]: {
         stack: [{ name: WidgetScreens.ContactScreens.Contact }],

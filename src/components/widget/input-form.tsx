@@ -11,13 +11,10 @@ import { Button } from "@/components/ui/button";
 
 import { useErrorStore } from "@/store/error-store";
 import { useWidgetStore } from "@/store/widget-store";
-import { useInputStore, useThreadMessageStore } from "@/store/store";
+import { useInputStore } from "@/store/input-store";
+import { useThreadMessageStore } from "@/store/thread-store";
 
-export function InputForm({
-  handleSendMessage,
-}: {
-  handleSendMessage: () => void;
-}) {
+export function InputForm({ sendMessage }: { sendMessage: () => void }) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [filePreviewName, setFilePreviewName] = React.useState<string>("");
   const [filePreviewUrl, setFilePreviewUrl] = React.useState<string>("");
@@ -25,17 +22,17 @@ export function InputForm({
   const { assistantTyping } = useWidgetStore();
   const { updateMessage } = useThreadMessageStore();
   const { setStatus, setMessage } = useErrorStore();
-  const { input, setInput, disableInput, setFile } = useInputStore();
+  const { input, setInput, disableInput } = useInputStore();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const uploaded = e.target.files?.[0];
-    if (!uploaded) return;
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const uploaded = e.target.files?.[0];
+  //   if (!uploaded) return;
 
-    const fileUrl = URL.createObjectURL(uploaded);
-    setFile(uploaded);
-    setFilePreviewUrl(fileUrl);
-    setFilePreviewName(uploaded.name);
-  };
+  //   const fileUrl = URL.createObjectURL(uploaded);
+  //   setFile(uploaded);
+  //   setFilePreviewUrl(fileUrl);
+  //   setFilePreviewName(uploaded.name);
+  // };
 
   const handleSubmit = () => {
     if (input.length >= 1500) {
@@ -46,7 +43,8 @@ export function InputForm({
       return;
     }
 
-    handleSendMessage();
+    sendMessage();
+
     updateMessage((prev) => {
       if (!prev || prev.length === 0) return prev;
 
@@ -55,6 +53,7 @@ export function InputForm({
         return [...prev.slice(0, -1), { ...last, file_url: filePreviewUrl }];
       return prev;
     });
+
     setFilePreviewUrl("");
     setFilePreviewName("");
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -82,7 +81,6 @@ export function InputForm({
               size="icon-sm"
               className="text-gray-500 hover:text-red-500 rounded-full cursor-pointer"
               onClick={() => {
-                setFile(null);
                 setFilePreviewUrl("");
                 setFilePreviewName("");
                 if (fileInputRef.current) fileInputRef.current.value = "";

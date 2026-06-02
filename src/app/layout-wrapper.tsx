@@ -6,7 +6,7 @@ import { useSessionStore } from "@/store/session-store";
 
 import { SuccessAlert } from "@/components/success-alert";
 import { FailureAlert } from "@/components/failure-alert";
-import { SessionResponse } from "@/lib/types/request-response";
+import { UserResponse } from "@/lib/types/types";
 
 import { BASE_URL } from "@/lib/services/google-auth";
 
@@ -28,7 +28,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
           return;
         }
 
-        const responseData: SessionResponse = await response.json();
+        const responseData: UserResponse = await response.json();
 
         if (responseData.success && responseData.user) {
           setUser(responseData.user);

@@ -17,7 +17,7 @@ export const HomeScreens = {
 
 export const MessagesScreens = {
   Messages: "MessagesScreen",
-  Assistant: "AssistantScreeen",
+  Threads: "ThreadsScreen",
 } as const;
 
 export const ContactScreens = {

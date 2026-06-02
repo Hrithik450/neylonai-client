@@ -3,12 +3,9 @@
 import { useCallback } from "react";
 import { useErrorStore } from "@/store/error-store";
 import { useSessionStore } from "@/store/session-store";
-import {
-  loginWithGoogleToken,
-  logoutFromGoogle,
-} from "@/lib/services/google-auth";
-import type { SessionResponse } from "@/lib/types/request-response";
+import type { UserResponse } from "@/lib/types/types";
 import { useGoogleRefButtons } from "@/providers/google-buttons-ref-provider";
+import { loginWithGoogle, logoutFromGoogle } from "@/lib/services/google-auth";
 
 export function useGoogleAuthHandler() {
   const { desktopButtonRef, mobileButtonRef } = useGoogleRefButtons();
@@ -30,12 +27,14 @@ export function useGoogleAuthHandler() {
       clearButtons();
       setLoading(true);
 
-      const response = await loginWithGoogleToken(res.credential);
-      const responseData: SessionResponse = await response.json();
+      const response = await loginWithGoogle(res.credential);
+      const responseData: UserResponse = await response.json();
 
       if (!response.ok) {
         setStatus("error");
-        setMessage(responseData.error);
+        if (responseData.error) {
+          setMessage(responseData.error);
+        }
         return;
       }
 

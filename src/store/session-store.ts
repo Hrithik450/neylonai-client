@@ -1,21 +1,15 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-export interface SessionUser {
-  id: number;
-  email: string;
-  name: string;
-  role: string;
-  profile_image?: string | null;
-}
+import type { User } from "@/lib/types/types";
 
 interface SessionStore {
-  user: SessionUser | null;
+  user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   sessionChecked: boolean;
 
-  setUser: (user: SessionUser | null) => void;
+  setUser: (user: User | null) => void;
   setAuthenticated: (value: boolean) => void;
   setLoading: (value: boolean) => void;
   setSessionChecked: (value: boolean) => void;

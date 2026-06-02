@@ -1,5 +1,5 @@
 import { PromptInputTextarea } from "@/components/ui/prompt-input";
-import { useInputStore } from "@/store/store";
+import { useInputStore } from "@/store/input-store";
 
 interface ChatInputTextareaProps {
   placeholder: string;
