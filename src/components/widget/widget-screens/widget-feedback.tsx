@@ -17,11 +17,6 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { guminertRegular } from "@/assets/fonts";
-import {
-  FeedbackFormData,
-  FeedbackResponse,
-  feedbackSchema,
-} from "@/actions/feedback/feedback.types";
 import { useSessionStore } from "@/store/session-store";
 
 const suggestions = [

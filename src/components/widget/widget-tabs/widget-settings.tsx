@@ -8,8 +8,6 @@ import { FiArrowRight } from "react-icons/fi";
 import { ClassicLoader } from "@/components/classic-loader";
 import { WidgetHeader } from "@/components/widget/widget-header";
 
-import { signOutAccount } from "@/actions/auth/sign-out";
-
 import { useSessionStore } from "@/store/session-store";
 import { useWidgetNavigation } from "@/hooks/use-widget-navigation";
 
@@ -93,7 +91,7 @@ export function WidgetSettings() {
         </div>
 
         <button
-          onClick={() => signOutAccount()}
+          // onClick={() => signOutAccount()}
           className="w-full text-sm md:text-base py-2 bg-red-500/80 hover:bg-red-500 hover:cursor-pointer text-white rounded-full font-medium shadow-md transition"
         >
           Logout

@@ -4,47 +4,28 @@ import React, { useEffect } from "react";
 import { useErrorStore } from "@/store/error-store";
 import { useSessionStore } from "@/store/session-store";
 
-import { SuccessAlert } from "@/components/success-alert";
-import { FailureAlert } from "@/components/failure-alert";
-import { UserResponse } from "@/lib/types/types";
+import { SuccessAlert } from "@/components/alerts/success-alert";
+import { FailureAlert } from "@/components/alerts/failure-alert";
 
 import { BASE_URL } from "@/lib/services/google-auth";
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const { status, message, setStatus, setMessage } = useErrorStore();
-  const { setSessionChecked, clearSession, setLoading, setUser } =
-    useSessionStore();
+  const { clearSession } = useSessionStore();
 
   useEffect(() => {
-    const fetchSession = async () => {
+    const validateSession = async () => {
       try {
-        setLoading(true);
-
         const response = await fetch(`${BASE_URL}/api/v1/me/`, {
           credentials: "include",
         });
-        if (!response.ok) {
-          clearSession();
-          return;
-        }
-
-        const responseData: UserResponse = await response.json();
-
-        if (responseData.success && responseData.user) {
-          setUser(responseData.user);
-        } else {
-          clearSession();
-        }
+        if (!response.ok) clearSession();
       } catch (err) {
-        clearSession();
-        console.error("session error: ", err);
-      } finally {
-        setLoading(false);
-        setSessionChecked(true);
+        console.error("network error: ", err);
       }
     };
 
-    fetchSession();
+    validateSession();
   }, []);
 
   return (

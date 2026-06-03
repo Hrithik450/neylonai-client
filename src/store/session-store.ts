@@ -5,9 +5,9 @@ import type { User } from "@/lib/types/types";
 
 interface SessionStore {
   user: User | null;
-  isAuthenticated: boolean;
   isLoading: boolean;
   sessionChecked: boolean;
+  isAuthenticated: boolean;
 
   setUser: (user: User | null) => void;
   setAuthenticated: (value: boolean) => void;

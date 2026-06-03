@@ -1,7 +1,6 @@
 "use client";
 
 import { WidgetHeader } from "@/components/widget/widget-header";
-import { signInWithGoogle } from "@/actions/auth/sign-in";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import React from "react";
@@ -23,9 +22,9 @@ export function WidgetLogin({ popScreen }: { popScreen: () => void }) {
         <Button
           variant="default"
           className="max-w-max mx-auto rounded-full px-6 xl:px-10 py-3 text-sm md:text-base cursor-pointer hover:opacity-90 transition-all"
-          onClick={async () => {
-            await signInWithGoogle();
-          }}
+          // onClick={async () => {
+          //   await signInWithGoogle();
+          // }}
         >
           Login
         </Button>
