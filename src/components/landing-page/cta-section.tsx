@@ -4,16 +4,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import NeylonAI from "@/assets/images/neylon.jpg";
 import { guminertMedium, guminertRegular } from "@/assets/fonts";
-import {
-  useWidgetNavigationStore,
-  useWidgetToggleStore,
-} from "@/store/widget-store";
-import { WidgetTabs } from "@/lib/constants";
 
 export function CTASection() {
-  const { setIsOpen } = useWidgetToggleStore();
-  const { switchTab } = useWidgetNavigationStore();
-
   return (
     <section
       className={cn(
@@ -38,18 +30,11 @@ export function CTASection() {
           guminertMedium.className,
         )}
       >
-        Power Conversations. Amplify Intelligence.
+        Start Capturing More Leads and Customer Requests.
       </h1>
 
-      {/* Subheading */}
-      <p className="text-center text-gray-700 max-w-xl mx-auto text-lg my-5 lg:my-6">
-        Experience the future of customer engagement with{" "}
-        <span className="font-semibold text-[#0d3129]">Neylon AI</span> — where
-        human connection meets intelligent automation.
-      </p>
-
       {/* CTA Buttons */}
-      <div className="flex flex-col md:flex-row justify-center gap-4">
+      <div className="flex flex-col md:flex-row justify-center gap-4 my-6">
         <button
           onClick={() => {
             // setIsOpen(true);
@@ -57,7 +42,7 @@ export function CTASection() {
           }}
           className="cursor-pointer border border-[#0d3129] bg-[#0d3129] hover:bg-white text-white hover:text-[#0d3129] shadow-sm rounded-full py-3 px-10 text-lg transition-all duration-300"
         >
-          Book a Demo
+          Try Live Demo
         </button>
       </div>
     </section>

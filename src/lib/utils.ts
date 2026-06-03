@@ -17,8 +17,7 @@ export const navLists: Array<NavItem> = [
   { label: "Home", id: "home" },
   { label: "Features", id: "features" },
   { label: "Explore AI", id: "ai" },
-  { label: "Insights", id: "insights", action: "insights" },
-  { label: "Contact Us", id: "contact", action: "contact" },
+  { label: "Contact Us", id: "footer" },
 ];
 
 export function loadVideoElement(

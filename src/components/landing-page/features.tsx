@@ -2,14 +2,9 @@
 
 import NeylonAI from "@/assets/images/neylon.jpg";
 import { guminertMedium, guminertRegular, sfProRegular } from "@/assets/fonts";
-import {
-  ArrowRightIcon,
-  ArrowUpFromDot,
-  Clock,
-  Server,
-  ShieldCheck,
-  Zap,
-} from "lucide-react";
+import { ArrowRightIcon, Clock, Server, ShieldCheck, Zap } from "lucide-react";
+
+import { useWidgetToggleStore } from "@/store/widget-store";
 import FeatureGrid from "@/assets/images/feature_grid.jpg";
 import gemini from "@/assets/images/google-gemini.webp";
 import perplexity from "@/assets/images/perplexity.png";
@@ -19,13 +14,8 @@ import gpt from "@/assets/images/gpt.png";
 import { AvatarGroup } from "../avatar-group";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import {
-  useWidgetNavigationStore,
-  useWidgetToggleStore,
-} from "@/store/widget-store";
 
 export function FeatureSection() {
-  const { switchTab } = useWidgetNavigationStore();
   const { setIsOpen } = useWidgetToggleStore();
 
   return (
@@ -48,15 +38,14 @@ export function FeatureSection() {
 
         <button
           onClick={() => {
-            // setIsOpen(true);
-            // switchTab(WidgetTabs.Contact);
+            setIsOpen(true);
           }}
           className={cn(
             "group flex items-center gap-3 bg-[#0d3129] p-3 px-6 rounded-full text-white cursor-pointer text-sm md:text-lg",
             guminertRegular.className,
           )}
         >
-          Book Appointment
+          Try Live Demo
           <ArrowRightIcon className="w-5 h-5 group-hover:-rotate-45 transition-all duration-150 ease-in-out" />
         </button>
       </header>
@@ -64,7 +53,7 @@ export function FeatureSection() {
       <main className="relative grid grid-cols-1 md:grid-cols-4 items-stretch justify-center my-6 lg:my-10 gap-4 sm:gap-6">
         <div className="max-sm:flex sm:hidden lg:flex flex-col row-span-2 col-span-1 bg-[#f2f2f2] rounded-xl px-4 py-6 shadow-md hover:rotate-2 transition-all duration-150 ease-in-out">
           <h3 className="text-2xl xl:text-3xl 2xl:text-4xl max-w-xs leading-tight font-semibold">
-            Built for Accuracy & Reliability
+            FAQ Automation
           </h3>
 
           <div className="py-10 sm:py-12">
@@ -72,13 +61,13 @@ export function FeatureSection() {
               avatars={[gpt, gemini, perplexity, anthropic, deepseek]}
             />
             <p className="text-black text-2xl pt-2 font-semibold">
-              Automate decisions with enterprise-grade precision.
+              Automate decisions with industry-standard models.
             </p>
           </div>
 
-          <h1 className="text-5xl font-semibold">+76%</h1>
+          <h1 className="text-5xl font-semibold">FAQs</h1>
           <span className="text-lg xl:text-xl py-2 text-gray-600">
-            faster insights v/s manual workflows.
+            answered automatically without manual support.
           </span>
         </div>
         <div className="row-span-1 col-span-1 sm:col-span-3 lg:col-span-2 relative flex flex-col h-full rounded-xl overflow-hidden shadow-md px-4 py-6 hover:rotate-2 transition-all duration-150 ease-in-out">
@@ -91,13 +80,13 @@ export function FeatureSection() {
           </div>
 
           <h3 className="relative text-xl xl:text-3xl 2xl:text-4xl max-w-xs leading-tight">
-            Unified Data Pipeline
+            Automatic Lead Capture
           </h3>
 
-          <div className="relative z-10 mt-6">
-            <h1 className="text-4xl lg:text-5xl font-semibold">1,000,000+</h1>
-            <span className="text-md lg:text-xl text-gray-600">
-              Records processed with zero data loss.
+          <div className="relative z-10 mt-6 max-w-md">
+            <span className="text-md lg:text-xl max-w-3xl text-gray-600">
+              Capture leads and answer customer questions even when your team is
+              offline.
             </span>
           </div>
 
@@ -116,22 +105,22 @@ export function FeatureSection() {
             24x7
           </h1>
           <span className="text-md lg:text-lg max-w-50 text-gray-300">
-            AI agents running nonstop for your ops
+            Appointment Booking Automation
           </span>
 
           {/* Bottom Badge Indicators */}
           <div className="flex gap-2 mt-auto">
             <span className="flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full text-sm text-green-300 hover:bg-white/20 transition-colors duration-200">
               <Clock className="w-3 h-3 pr-1 animate-ping text-green-400" />
-              24/7
+              Instant
             </span>
             <span className="flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full text-sm text-yellow-300 hover:bg-white/20 transition-colors duration-200">
               <Zap className="w-3 h-3 pr-1 animate-bounce text-yellow-400" />
-              Fast
+              Automated
             </span>
             <span className="flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full text-sm text-blue-300 hover:bg-white/20 transition-colors duration-200">
               <Server className="w-3 h-3 pr-1 animate-pulse text-blue-400" />
-              Reliable
+              Available
             </span>
           </div>
         </div>
@@ -150,13 +139,13 @@ export function FeatureSection() {
 
           {/* Content */}
           <p className="mt-2 text-xl lg:text-2xl max-w-62.5 font-semibold">
-            Instant Lead Intelligence
+            Unified Customer Dashboard
           </p>
 
           {/* Description */}
           <span className="text-sm 2xl:text-md text-gray-300 max-w-67.5 mt-2 lg:mt-1">
-            AI agents surface the hottest prospects from emails, chats, and
-            CRMs—no manual search.
+            Manage leads, customer conversations, and support requests from one
+            simple dashboard.
           </span>
 
           {/* Bottom animated info or badges */}
@@ -169,7 +158,7 @@ export function FeatureSection() {
               >
                 <circle cx="10" cy="10" r="5" />
               </svg>
-              Real-time
+              Leads
             </span>
 
             <span className="flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-yellow-300 hover:bg-white/20 transition-colors duration-200">
@@ -180,7 +169,7 @@ export function FeatureSection() {
               >
                 <circle cx="10" cy="10" r="5" />
               </svg>
-              Automated
+              Support
             </span>
 
             <span className="flex items-center gap-1 bg-white/10 px-2 py-1 rounded-full text-xs text-blue-300 hover:bg-white/20 transition-colors duration-200">
@@ -191,7 +180,7 @@ export function FeatureSection() {
               >
                 <circle cx="10" cy="10" r="5" />
               </svg>
-              Accurate
+              Organized
             </span>
           </div>
         </div>
@@ -200,18 +189,17 @@ export function FeatureSection() {
           <div className="px-4 md:px-6 py-4 sm:py-0 2xl:px-10 bg-white rounded-xl flex flex-col h-full gap-2 justify-center items-start md:items-center group">
             <ShieldCheck className="pr-2 w-18 h-18 group-hover:scale-110 group-hover:rotate-5 transition-all duration-150 ease-in-out" />
             <h1 className="text-5xl font-semibold">100%</h1>
-            <p className="text-lg">End-to-End Data Protection</p>
+            <p className="text-lg max-w-sm">Customer Coverage.</p>
           </div>
 
           <div className="flex-1 flex flex-col h-full justify-around items-start space-y-2">
             <h3 className="text-3xl max-w-67.5 font-semibold">
-              Building a 100% Secure AI Solutions
+              Support Tickets Management.
             </h3>
 
-            <p className="text-sm 2xl:text-lg text-gray-500">
-              Our AI agents lock down every conversation, email, and
-              document—keeping your intellectual property safe from breaches or
-              accidental leaks.
+            <p className="text-sm md:text-base 2xl:text-lg text-gray-500">
+              Automatically capture, organize, and track every customer inquiry
+              from a single dashboard.
             </p>
 
             {/* 
@@ -222,7 +210,7 @@ export function FeatureSection() {
           </div>
         </div>
 
-        <div className="relative bg-[#f2f2f2] col-span-1 md:col-span-4 grid grid-cols-2 sm:grid-cols-4 items-center gap-6 rounded-xl overflow-hidden pr-2 md:px-4 py-6">
+        {/* <div className="relative bg-[#f2f2f2] col-span-1 md:col-span-4 grid grid-cols-2 sm:grid-cols-4 items-center gap-6 rounded-xl overflow-hidden pr-2 md:px-4 py-6">
           <div className="col-span-1 space-y-2 mx-auto">
             <div className="flex items-center group gap-1">
               <ArrowUpFromDot className="h-10 w-10 2xl:w-15 2xl:h-15 group-hover:rotate-45 transition-all duration-150 ease-in-out" />
@@ -266,7 +254,7 @@ export function FeatureSection() {
               Lead Conversion
             </p>
           </div>
-        </div>
+        </div> */}
       </main>
     </section>
   );

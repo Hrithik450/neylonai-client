@@ -23,7 +23,7 @@ export function Hero() {
     <section
       className={cn(
         "relative px-5 sm:px-20 pt-44 min-h-dvh h-full w-full",
-        sfProRegular.className
+        sfProRegular.className,
       )}
     >
       <div className="absolute inset-0">
@@ -38,7 +38,7 @@ export function Hero() {
         <p
           className={cn(
             "col-start-1 col-span-7 row-start-1 text-4xl md:text-5xl lg:text-7xl xl:text-[6.25rem] leading-26",
-            sfProRegular.className
+            sfProRegular.className,
           )}
         >
           Transform with
@@ -54,7 +54,7 @@ export function Hero() {
         <p
           className={cn(
             "col-span-6 col-start-1 row-start-2 text-4xl md:text-5xl lg:text-7xl xl:text-[6.25rem] leading-26",
-            sfProRegular.className
+            sfProRegular.className,
           )}
         >
           AI-Solutionz
@@ -70,7 +70,7 @@ export function Hero() {
         <p
           className={cn(
             "col-start-1 text-4xl md:text-5xl lg:text-7xl xl:text-[6.25rem] leading-26",
-            sfProRegular.className
+            sfProRegular.className,
           )}
         >
           Assistants
@@ -113,23 +113,23 @@ export function Hero() {
         <div className="col-span-3 col-start-6 absolute bottom-0 mx-2 overflow-hidden">
           <div className="relative h-full flex-center">
             <div className="relative w-full h-full z-20">
-              <Image
+              {/* <Image
                 className="bg-transparent w-full h-full object-cover"
                 src="/images/Iphone-frame.png"
                 alt="frame"
-              />
+              /> */}
             </div>
 
             <div className="absolute w-full h-full z-10">
               <div className="pointer-events-none w-[95%] aspect-[380/848] mx-auto object-cover rounded-t-[1.75rem] md:rounded-t-[2.25rem] lg:rounded-t-[3rem] xl:rounded-t-[3.70rem] 2xl:rounded-t-[4.5rem] overflow-hidden">
-                <NextVideo
+                {/* <NextVideo
                   className="h-full w-full object-cover"
                   preload="none"
                   src={demoVideo}
                   playsInline
                   autoPlay
                   muted
-                />
+                /> */}
               </div>
             </div>
           </div>
@@ -138,23 +138,23 @@ export function Hero() {
         <div className="col-span-4 col-start-9 absolute bottom-0 mx-3 xl:mx-6 overflow-hidden">
           <div className="relative w-full h-full flex-center">
             <div className="relative w-full h-full z-20">
-              <Image
+              {/* <Image
                 className="bg-transparent w-full h-full object-cover"
                 src="/images/Iphone-frame.png"
                 alt="frame"
-              />
+              /> */}
             </div>
 
             <div className="absolute h-full w-full z-10">
               <div className="pointer-events-none w-[95%] aspect-[380/848] mx-auto object-cover rounded-t-[1.75rem] md:rounded-t-[2.25rem] lg:rounded-t-[3rem] xl:rounded-t-[3.70rem] 2xl:rounded-t-[4.5rem] overflow-hidden">
-                <NextVideo
+                {/* <NextVideo
                   className="h-full w-full object-cover"
                   preload="none"
                   src={demoVideo}
                   playsInline
                   autoPlay
                   muted
-                />
+                /> */}
               </div>
             </div>
           </div>

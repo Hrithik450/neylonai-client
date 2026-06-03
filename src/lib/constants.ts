@@ -63,34 +63,44 @@ export type WidgetTabType = (typeof WidgetTabs)[keyof typeof WidgetTabs];
 
 export const faqs = [
   {
-    question: "How quickly can I get started?",
+    question: "How do I get started?",
     answer:
-      "So depending on your requirements, you can start seeing results within days. To begin right away, just tell our assistant — 'Book my appointment' — and it will schedule everything for you instantly.",
+      "You can get started by contacting us directly through the AI assistant or the Contact section. Our team will understand your requirements and recommend the right AI solution for your business.",
   },
   {
-    question: "What services does Neylon AI provide?",
+    question: "What can the AI agent do?",
     answer:
-      "We specialize in building scalable AI solutions, from chatbots and multi-agent systems to workflow automation and data-driven insights.",
+      "Our AI agents can answer customer questions, capture leads, manage support requests, book appointments, and keep conversations running 24/7.",
   },
   {
-    question: "How can Neylon AI help my business grow?",
+    question: "Will I be able to see customer conversations?",
     answer:
-      "Our AI systems improve accuracy, reliability, automate repetitive tasks, and provide actionable insights, helping you scale faster with reduced costs.",
+      "Yes. Every lead, customer message, and support request is available inside your dashboard, making it easy to track and manage interactions.",
   },
   {
-    question: "Do I need technical expertise to use your solutions?",
+    question: "Do I need technical knowledge to use it?",
     answer:
-      "Not at all. We design our platforms to be simple and user-friendly. Our team handles the complexity so you can focus on your business.",
+      "No. We handle the setup and integration for you, so you can focus on running your business while the AI handles customer interactions.",
   },
   {
-    question: "Can your AI integrate with my existing tools?",
+    question: "Can the AI work with my existing website?",
     answer:
-      "Yes, our solutions are built to integrate seamlessly with CRMs, ERPs, email systems, and other business software you already use.",
+      "Yes. Our AI agents can be integrated into most websites and can be customized to match your business, services, and brand voice.",
   },
   {
-    question: "Is my data safe with Neylon AI?",
+    question: "What happens when a customer needs human support?",
     answer:
-      "Absolutely. We follow enterprise-grade security practices, encryption, and compliance standards to ensure your data remains secure and private.",
+      "The AI can collect the customer's details, create a support request, and notify your team so nothing gets missed.",
+  },
+  {
+    question: "Can the AI book appointments automatically?",
+    answer:
+      "Yes. The AI can collect customer information, qualify inquiries, and help schedule appointments based on your availability.",
+  },
+  {
+    question: "Is my business data secure?",
+    answer:
+      "Absolutely. Customer conversations and business data are handled securely using modern security practices and controlled access systems.",
   },
 ];
 
