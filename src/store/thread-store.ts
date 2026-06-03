@@ -43,7 +43,7 @@ export const useThreadStore = create<ThreadStore>()(
 );
 
 export const useThreadMessageStore = create<ThreadMessageStore>()(
-  devtools((set, get) => ({
+  devtools((set) => ({
     messages: null,
 
     setMessages: (messages) => {

@@ -164,6 +164,7 @@ export function useWidgetMessageHandler() {
         }
       }
     } catch (error) {
+      console.log("error: ", error);
       setDisableInput(false);
       setAssistantTyping(false);
     }
