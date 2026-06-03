@@ -35,7 +35,7 @@ export function Footer() {
             <ul className="space-y-2 text-gray-300 md:text-base">
               <li>FAQ&apos;s</li>
               <li>Features</li>
-              <li>AI Assitant</li>
+              <li>AI Assistant</li>
             </ul>
           </div>
 

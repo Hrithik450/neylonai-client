@@ -15,10 +15,6 @@ export function AIChat() {
   const { isOpen, setIsOpen } = useWidgetToggleStore();
 
   React.useEffect(() => {
-    setIsOpen(true);
-  }, []);
-
-  React.useEffect(() => {
     if (loggedIn === "false") setIsOpen(true);
   }, [loggedIn]);
 

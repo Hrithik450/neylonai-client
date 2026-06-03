@@ -118,10 +118,6 @@ export function FeatureSection() {
               <Zap className="w-3 h-3 pr-1 animate-bounce text-yellow-400" />
               Automated
             </span>
-            <span className="flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full text-sm text-blue-300 hover:bg-white/20 transition-colors duration-200">
-              <Server className="w-3 h-3 pr-1 animate-pulse text-blue-400" />
-              Available
-            </span>
           </div>
         </div>
 
