@@ -109,15 +109,16 @@ export function WidgetThreads() {
       try {
         setLoading(true);
         const res = await fetch(`${BASE_URL}/api/v1/threads/user/${user.id}/`);
-        const data: ThreadsResponse = await res.json();
+        const resData: ThreadsResponse = await res.json();
 
-        if (!data.success) {
+        if (!resData.success) {
           setLoading(false);
-          console.error("Error fetching threads:", data.error);
+          console.error("Error fetching threads:", resData.error);
           return;
         }
 
-        if (data.data) setThreads(data.data);
+        const threadsData = resData.data;
+        if (threadsData) setThreads(threadsData);
       } catch (error) {
         setLoading(false);
         console.error("Fetch error:", error);

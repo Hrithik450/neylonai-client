@@ -12,11 +12,11 @@ import {
 } from "@/store/widget-store";
 
 const texts = [
-  "How can I assist you today?",
-  "I am your AI assistant from AI Solutionz.",
-  "We build smart and scalable AI solutions for your business.",
-  "From chatbots to automation, we make AI simple.",
-  "Your growth partner in intelligent automation.",
+  "How can I help you today?",
+  "Need information about our services or pricing?",
+  "I'm here to answer your questions instantly.",
+  "Looking for a solution? Let's find the right one together.",
+  "Ask me anything about our products and services.",
 ];
 
 export function WidgetIntroText() {

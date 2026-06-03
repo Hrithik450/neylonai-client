@@ -40,22 +40,22 @@ const TabsRegistry = {
     },
     default: WidgetScreens.MessagesScreens.Messages,
   },
-  Contact: {
-    icon: <Mail className="w-6 h-6" />,
-    label: WidgetTabs.Contact,
-    screens: {
-      [WidgetScreens.ContactScreens.Contact]: WigetContact,
-    },
-    default: WidgetScreens.ContactScreens.Contact,
-  },
-  Settings: {
-    icon: <Settings className="w-6 h-6" />,
-    label: WidgetTabs.Settings,
-    screens: {
-      [WidgetScreens.SettingsScreens.Settings]: WidgetSettings,
-    },
-    default: WidgetScreens.SettingsScreens.Settings,
-  },
+  // Contact: {
+  //   icon: <Mail className="w-6 h-6" />,
+  //   label: WidgetTabs.Contact,
+  //   screens: {
+  //     [WidgetScreens.ContactScreens.Contact]: WigetContact,
+  //   },
+  //   default: WidgetScreens.ContactScreens.Contact,
+  // },
+  // Settings: {
+  //   icon: <Settings className="w-6 h-6" />,
+  //   label: WidgetTabs.Settings,
+  //   screens: {
+  //     [WidgetScreens.SettingsScreens.Settings]: WidgetSettings,
+  //   },
+  //   default: WidgetScreens.SettingsScreens.Settings,
+  // },
 } as const;
 
 /* -------------------------------------------------------------------------- */

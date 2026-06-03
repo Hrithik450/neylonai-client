@@ -55,8 +55,8 @@ export type WidgetScreenType =
 export const WidgetTabs = {
   Home: "Home",
   Messages: "Messages",
-  Contact: "Contact",
-  Settings: "Settings",
+  // Contact: "Contact",
+  // Settings: "Settings",
 } as const;
 
 export type WidgetTabType = (typeof WidgetTabs)[keyof typeof WidgetTabs];

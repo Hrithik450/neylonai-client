@@ -7,6 +7,10 @@ import {
   Maximize2,
   ArrowRight,
   MessageSquareQuote,
+  MessageCircle,
+  Linkedin,
+  Youtube,
+  Mail,
 } from "lucide-react";
 import React from "react";
 import Image from "next/image";
@@ -14,46 +18,28 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { guminertBold } from "@/assets/fonts";
 
-import { useRouter } from "next/navigation";
-import { WidgetTabs, WidgetTabType } from "@/lib/constants";
+import { WidgetScreens, WidgetTabs } from "@/lib/constants";
+import { useWidgetToggleStore } from "@/store/widget-store";
 import { WidgetIntroText } from "@/components/widget/widget-intro-texts";
 
-import { useErrorStore } from "@/store/error-store";
-import { useSessionStore } from "@/store/session-store";
-import {
-  useWidgetNavigationStore,
-  useWidgetToggleStore,
-} from "@/store/widget-store";
-
 import NeylonAI from "@/assets/images/neylon.jpg";
-import CustomerServiceAssistantImage from "@/assets/images/articles/customer-service-assistant.png";
+import AgentsImage from "@/assets/images/agents.webp";
+import { useWidgetNavigation } from "@/hooks/use-widget-navigation";
 
 const blogs = [
   {
     id: 1,
-    image: CustomerServiceAssistantImage,
-    type: "Customer service",
+    image: AgentsImage,
+    type: "Latest Insights",
     date: "October 26, 2025",
-    title:
-      "Optimizing Customer Support with AI: The Customer Service Assistant",
+    title: "73% of Customer Questions Never Needed a Human Agent",
     action: "/article/customer-service-assistant",
     assistant: "customer_service_assistant",
   },
 ] as const;
 
-export interface WidgetHomeProps {
-  pushScreen?: (tab: WidgetTabType, screen: Screen) => void;
-  switchTab?: (tab: WidgetTabType) => void;
-}
-
 export function WidgetHome() {
-  const router = useRouter();
-  // const { role, assistant } = useUserStore();
-  // const { setCurrentThreadId } = useThreadStore();
-  const { setMessage, setStatus } = useErrorStore();
-  const { user, isAuthenticated } = useSessionStore();
-
-  const { switchTab } = useWidgetNavigationStore();
+  const { navigate } = useWidgetNavigation();
   const { isOpen, isCollapse, setIsOpen, setCollapse } = useWidgetToggleStore();
 
   return (
@@ -104,19 +90,12 @@ export function WidgetHome() {
       <div className="pb-4 px-2 space-y-6 flex-1">
         {/* Top widgets */}
         <div className="flex flex-col gap-2.5">
-          {/* <button
+          <button
             onClick={() => {
-              if (isAuthenticated) {
-                setCurrentThreadId(null);
-                if (pushScreen)
-                  pushScreen(TabType.Messages, {
-                    component: WidgetChatThreadUI,
-                    props: { id: null, title: null },
-                  });
-              } else {
-                if (pushScreen)
-                  pushScreen(TabType.Home, { component: WidgetLogin });
-              }
+              navigate(
+                WidgetTabs.Messages,
+                WidgetScreens.MessagesScreens.Messages,
+              );
             }}
             className="group cursor-pointer bg-white shadow-sm border rounded-xl px-4 pr-6 py-4 flex justify-between items-center"
           >
@@ -128,29 +107,6 @@ export function WidgetHome() {
                 </p>
                 <p className="text-start text-sm text-gray-600">
                   Our AI Assistant Can Help.
-                </p>
-              </div>
-            </div>
-            <ArrowRight className="text-gray-500 w-5 h-5 group-hover:-rotate-45 transition-all duration-150 ease-in-out" />
-          </button> */}
-
-          <button
-            onClick={() => {
-              if (switchTab) {
-                switchTab(WidgetTabs.Contact);
-              }
-            }}
-            className="group cursor-pointer bg-white shadow-sm border rounded-xl px-4 pr-6 py-4 flex justify-between items-center"
-          >
-            <div className="flex justify-start items-center gap-4">
-              <Calendar className="text-gray-500 w-6 h-6 group-hover:-rotate-12 transition-all duration-150 ease-in-out" />
-
-              <div className="flex flex-col items-start">
-                <p className="font-semibold text-sm md:text-base">
-                  Book an appointment
-                </p>
-                <p className="text-start text-sm text-gray-600">
-                  Pick a time that works best for you.
                 </p>
               </div>
             </div>
@@ -277,6 +233,45 @@ export function WidgetHome() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Contact Section */}
+        <div className="flex flex-col items-center gap-3 my-4">
+          <div className="text-center">
+            <p className="text-sm font-semibold text-gray-800">
+              Powered by Neylon AI
+            </p>
+            <p className="text-xs text-gray-500">
+              AI assistants for modern businesses
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <a
+              href="https://www.linkedin.com/in/hruthik-m-3595a0329/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A66C2]/10 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white transition-all duration-200"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+
+            <a
+              href="https://youtube.com/@mhrithik450"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-9 h-9 rounded-full bg-[#FF0000]/10 text-[#FF0000] hover:bg-[#FF0000] hover:text-white transition-all duration-200"
+            >
+              <Youtube className="w-4 h-4" />
+            </a>
+
+            <a
+              href="mailto:mhrithik450@gmail.com"
+              className="flex items-center justify-center w-9 h-9 rounded-full bg-[#EA4335]/10 text-[#EA4335] hover:bg-[#EA4335] hover:text-white transition-all duration-200"
+            >
+              <Mail className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </div>
