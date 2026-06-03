@@ -23,7 +23,6 @@ import {
   useWidgetNavigationStore,
   useWidgetToggleStore,
 } from "@/store/widget-store";
-import { WidgetTabs } from "@/lib/constants";
 
 export function FeatureSection() {
   const { switchTab } = useWidgetNavigationStore();
@@ -49,8 +48,8 @@ export function FeatureSection() {
 
         <button
           onClick={() => {
-            setIsOpen(true);
-            switchTab(WidgetTabs.Contact);
+            // setIsOpen(true);
+            // switchTab(WidgetTabs.Contact);
           }}
           className={cn(
             "group flex items-center gap-3 bg-[#0d3129] p-3 px-6 rounded-full text-white cursor-pointer text-sm md:text-lg",
@@ -116,7 +115,7 @@ export function FeatureSection() {
           <h1 className="text-4xl xl:text-5xl font-semibold text-white">
             24x7
           </h1>
-          <span className="text-md lg:text-lg max-w-[200px] text-gray-300">
+          <span className="text-md lg:text-lg max-w-50 text-gray-300">
             AI agents running nonstop for your ops
           </span>
 
@@ -150,12 +149,12 @@ export function FeatureSection() {
           </div>
 
           {/* Content */}
-          <p className="mt-2 text-xl lg:text-2xl max-w-[250px] font-semibold">
+          <p className="mt-2 text-xl lg:text-2xl max-w-62.5 font-semibold">
             Instant Lead Intelligence
           </p>
 
           {/* Description */}
-          <span className="text-sm 2xl:text-md text-gray-300 max-w-[270px] mt-2 lg:mt-1">
+          <span className="text-sm 2xl:text-md text-gray-300 max-w-67.5 mt-2 lg:mt-1">
             AI agents surface the hottest prospects from emails, chats, and
             CRMs—no manual search.
           </span>
@@ -205,7 +204,7 @@ export function FeatureSection() {
           </div>
 
           <div className="flex-1 flex flex-col h-full justify-around items-start space-y-2">
-            <h3 className="text-3xl max-w-[270px] font-semibold">
+            <h3 className="text-3xl max-w-67.5 font-semibold">
               Building a 100% Secure AI Solutions
             </h3>
 

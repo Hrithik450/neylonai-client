@@ -56,12 +56,12 @@ export const useWidgetNavigationStore = create<WidgetNavigationStore>()(
       [WidgetTabs.Messages]: {
         stack: [{ name: WidgetScreens.MessagesScreens.Threads }],
       },
-      [WidgetTabs.Contact]: {
-        stack: [{ name: WidgetScreens.ContactScreens.Contact }],
-      },
-      [WidgetTabs.Settings]: {
-        stack: [{ name: WidgetScreens.SettingsScreens.Settings }],
-      },
+      // [WidgetTabs.Contact]: {
+      //   stack: [{ name: WidgetScreens.ContactScreens.Contact }],
+      // },
+      // [WidgetTabs.Settings]: {
+      //   stack: [{ name: WidgetScreens.SettingsScreens.Settings }],
+      // },
     },
     pushScreen: (tab, screen) =>
       set((state) => ({

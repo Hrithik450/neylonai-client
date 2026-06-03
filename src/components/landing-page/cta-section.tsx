@@ -52,8 +52,8 @@ export function CTASection() {
       <div className="flex flex-col md:flex-row justify-center gap-4">
         <button
           onClick={() => {
-            setIsOpen(true);
-            switchTab(WidgetTabs.Contact);
+            // setIsOpen(true);
+            // switchTab(WidgetTabs.Contact);
           }}
           className="cursor-pointer border border-[#0d3129] bg-[#0d3129] hover:bg-white text-white hover:text-[#0d3129] shadow-sm rounded-full py-3 px-10 text-lg transition-all duration-300"
         >

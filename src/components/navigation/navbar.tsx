@@ -35,10 +35,10 @@ function PageNavigations({
         switchTab(WidgetTabs.Home);
         break;
 
-      default:
-        setIsOpen(true);
-        switchTab(WidgetTabs.Contact);
-        break;
+      // default:
+      //   setIsOpen(true);
+      //   switchTab(WidgetTabs.Contact);
+      //   break;
     }
   };
 
